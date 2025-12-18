@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, isMobileMenuOp
                  </svg>
                )}
             </div>
-            <span className="hidden sm:block tracking-tight text-2xl">{CANDIDATE_NAME}</span>
+            <span className="block tracking-tight text-xl sm:text-2xl font-extrabold">{CANDIDATE_NAME}</span>
           </div>
 
           {/* Desktop Menu */}

@@ -176,7 +176,7 @@ const TransportPage: React.FC = () => {
           </div>
 
           <div>
-             <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Ubicación de recogida</label>
+             <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Ubicación de recogida (incluye tu distrito, cantón y provincia)</label>
              <div className="flex">
                <input 
                  type="text" 

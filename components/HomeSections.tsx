@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { MapPin, Users, Heart, Search, ChevronRight, Vote, CreditCard, MessageSquare, ExternalLink } from 'lucide-react';
+import { MapPin, Users, Heart, Search, ChevronRight, Vote, CreditCard, MessageSquare, ExternalLink, Flag, Bus } from 'lucide-react';
 import { COLORS } from '../constants';
 
 export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setActiveTab }) => (
@@ -35,34 +35,42 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
           Tu Casa Ciudadana <br />
           <span className="text-gray-200 font-bold">Digital</span>
         </h1>
-        <p className="text-lg md:text-2xl text-gray-100 mb-8 max-w-lg mx-auto md:mx-0 font-light leading-relaxed drop-shadow-sm">
-          Gestioná tu voluntariado, solicitá transporte y signos externos desde tu celular. Construyamos el futuro juntos.
+        <p className="text-lg md:text-2xl text-gray-100 mb-6 max-w-lg mx-auto md:mx-0 font-light leading-relaxed drop-shadow-sm">
+          Doná, gestioná tu voluntariado, consultá nuestras propuestas, tu centro de votación, solicitá transporte y signos externos de manera virtual.
         </p>
-        <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
+        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto md:mx-0">
           <button 
             onClick={() => setActiveTab('voluntariado')}
-            className="text-white px-10 py-4 rounded-xl font-bold shadow-xl transform hover:-translate-y-1 transition-all flex items-center justify-center tracking-wide uppercase text-sm backdrop-blur-sm bg-red-600/90 hover:bg-red-600"
+            className="text-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm bg-red-600/90 hover:bg-red-600"
             style={{ backgroundColor: COLORS.red }}
           >
-            <Heart className="mr-2" size={20} />
-            Quiero Ayudar
+            <Heart className="mr-1" size={18} />
+            Ayudar
           </button>
           <button 
             onClick={() => setActiveTab('donde-votar')}
-            className="bg-white/90 hover:bg-white px-10 py-4 rounded-xl font-bold shadow-xl flex items-center justify-center tracking-wide uppercase text-sm transition-colors backdrop-blur-sm"
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm"
             style={{ color: COLORS.green }}
           >
-            <Search className="mr-2" size={20} />
-            ¿Dónde Voto?
+            <Search className="mr-1" size={18} />
+            Dónde Voto
           </button>
-        </div>
-        
-        {/* News Widget */}
-        <div className="mt-12 hidden md:block">
-             <div className="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20 max-w-md hover:bg-white/20 transition-colors cursor-pointer shadow-lg">
-                <h3 className="font-bold text-sm mb-2 flex items-center"><Vote className="mr-2" size={16}/> Noticias de Campaña</h3>
-                <p className="text-sm text-gray-100">Gira en Guanacaste: Este fin de semana estaremos en Nicoya escuchando a la comunidad.</p>
-             </div>
+          <button 
+            onClick={() => setActiveTab('signos')}
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm"
+            style={{ color: COLORS.green }}
+          >
+            <Flag className="mr-1" size={18} />
+            Identificáte
+          </button>
+          <button 
+            onClick={() => setActiveTab('transporte')}
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm"
+            style={{ color: COLORS.green }}
+          >
+            <Bus className="mr-1" size={18} />
+            Te Llevamos
+          </button>
         </div>
       </div>
 
