@@ -1,0 +1,399 @@
+
+import React, { useEffect, useState } from 'react';
+import { Flag, MapPin } from 'lucide-react';
+import { COLORS, MERCH_ITEMS } from '../constants';
+import { appendToSheet, formatSignsData, SHEETS } from '../services/googleSheetsService';
+
+declare global {
+  interface Window { google?: any }
+}
+
+interface SignsPageProps {
+  cart: Record<string, number>;
+  setCart: React.Dispatch<React.SetStateAction<Record<string, number>>>;
+  showCartModal: boolean;
+  setShowCartModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, setShowCartModal }) => {
+  const [flagSize, setFlagSize] = useState<string>('Grande');
+  const [shirtSize, setShirtSize] = useState<string>('M');
+  const [flyerPackage, setFlyerPackage] = useState<string>('50 unidades');
+  const [customerName, setCustomerName] = useState<string>('');
+  const [customerId, setCustomerId] = useState<string>('');
+  const [customerPhone, setCustomerPhone] = useState<string>('');
+  const [customerProvince, setCustomerProvince] = useState<string>('');
+  const [customerCanton, setCustomerCanton] = useState<string>('');
+  const [tokenClient, setTokenClient] = useState<any>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
+
+  const addToCart = (id: number, size?: string) => {
+    const key = `${id}-${size || ''}`;
+    setCart(prev => ({ ...prev, [key]: (prev[key] || 0) + 1 }));
+  };
+
+  // Load Google Identity Services (GIS) script and init token client
+  useEffect(() => {
+    const existing = document.getElementById('google-identity');
+    if (!existing) {
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.id = 'google-identity';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => initTokenClient();
+      document.body.appendChild(script);
+    } else {
+      initTokenClient();
+    }
+
+    function initTokenClient() {
+      try {
+        const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
+        if (!clientId) return;
+        const gis = (window as any).google?.accounts?.oauth2;
+        if (!gis) return;
+        const tc = gis.initTokenClient({
+          client_id: clientId,
+          scope: 'https://www.googleapis.com/auth/spreadsheets',
+          callback: (resp: any) => {
+            if (resp && resp.access_token) setAccessToken(resp.access_token);
+          }
+        });
+        setTokenClient(tc);
+      } catch (e) {
+        // ignore until script loads
+      }
+    }
+  }, []);
+
+  const ensureAccessToken = async () => {
+    if (accessToken) return accessToken;
+    if (!tokenClient) throw new Error('Client de Google no inicializado. Setea VITE_GOOGLE_CLIENT_ID y recarga.');
+    return new Promise<string>((resolve, reject) => {
+      try {
+        const currentTokenClient = tokenClient;
+        currentTokenClient.callback = (tokenResponse: any) => {
+          if (tokenResponse.access_token) {
+            setAccessToken(tokenResponse.access_token);
+            resolve(tokenResponse.access_token);
+          } else {
+            reject(new Error('No se obtuvo el token de acceso'));
+          }
+        };
+        currentTokenClient.requestAccessToken({ prompt: 'consent' });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  };
+
+  const saveCartToDrive = async () => {
+    setUploadError(null);
+    setUploadedUrl(null);
+    setUploading(true);
+    try {
+      if (Object.keys(cart).length === 0) {
+        throw new Error('El carrito está vacío. Agrega items antes de guardar.');
+      }
+      
+      if (!customerName.trim() || !customerId.trim() || !customerPhone.trim() || !customerProvince.trim() || !customerCanton.trim()) {
+        throw new Error('Por favor completa todos los campos requeridos (nombre, cédula, teléfono, provincia y cantón).');
+      }
+
+      // Ensure token
+      const token = await ensureAccessToken();
+
+      // Format data for Google Sheets (ahora incluye nombre, cédula, teléfono, provincia y cantón)
+      const rowData = formatSignsData(cart, MERCH_ITEMS, customerName, customerId, customerPhone, customerProvince, customerCanton);
+
+      // Append to Google Sheets
+      await appendToSheet(token, SHEETS.IDENTIFICATE, rowData);
+
+      setUploadedUrl('https://docs.google.com/spreadsheets/d/19CeLOvIVzwUiGR6XYi41Y-jjpdJt5u--fs0mwZfIiPQ/edit?gid=1376903276#gid=1376903276');
+      
+      // Clear cart and form after successful submission
+      setCart({});
+      setCustomerName('');
+      setCustomerId('');
+      setCustomerPhone('');
+      setCustomerProvince('');
+      setCustomerCanton('');
+      setShowCartModal(false);
+      setShowSuccess(true);
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => setShowSuccess(false), 5000);
+    } catch (err: any) {
+      console.error('Error al guardar pedido:', err);
+      setUploadError(err?.message || 'Error desconocido al guardar el pedido.');
+    } finally {
+      setUploading(false);
+    }
+  };
+  const totalItems = (Object.values(cart) as number[]).reduce((a, b) => a + b, 0);
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-12">
+      {/* Mensaje de Éxito */}
+      {showSuccess && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-bounce">
+          <div className="bg-green-600 text-white px-8 py-4 rounded-xl shadow-2xl flex items-center space-x-3">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <div>
+              <p className="font-bold text-lg">¡Pedido Confirmado!</p>
+              <p className="text-sm">Tu solicitud ha sido registrada exitosamente</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="flex justify-between items-end mb-8 border-b pb-4">
+        <div>
+          <h2 className="text-3xl font-bold text-gray-800">Signos Externos</h2>
+          <p className="text-gray-600 mt-1">Identificáte con la Coalición. Solicitá tu material oficial aquí.</p>
+        </div>
+        {totalItems > 0 && (
+          <div className="relative">
+            <button
+              onClick={() => setShowCartModal(s => !s)}
+              className="text-white px-4 py-2 rounded-full text-sm font-bold animate-bounce uppercase"
+              style={{ backgroundColor: COLORS.green }}
+            >
+              {totalItems} Artículos
+            </button>
+
+            {showCartModal && (
+              <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg p-3 text-sm z-20">
+                <div className="font-bold mb-2">Carrito</div>
+                {Object.entries(cart).map(([key, qty]) => {
+                  const [idStr, size] = key.split('-');
+                  const idNum = Number(idStr);
+                  const item = MERCH_ITEMS.find(i => i.id === idNum);
+                  return (
+                    <div key={key} className="flex justify-between items-center py-1 border-b border-gray-100">
+                      <div>
+                        <div className="font-semibold">{item?.name || 'Item'}</div>
+                        {size && size !== '' && <div className="text-xs text-gray-500">Tamaño: {size}</div>}
+                      </div>
+                      <div className="font-bold">x{qty}</div>
+                    </div>
+                  );
+                })}
+                <div className="text-right mt-3 font-bold">Total: {totalItems}</div>
+                
+                {/* Campos de Nombre y Cédula */}
+                <div className="mt-4 space-y-2">
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Nombre Completo *</label>
+                    <input
+                      type="text"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                      placeholder="Tu nombre completo"
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-xs"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Cédula *</label>
+                    <input
+                      type="text"
+                      value={customerId}
+                      onChange={(e) => setCustomerId(e.target.value)}
+                      placeholder="Número de cédula"
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-xs"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Teléfono / WhatsApp *</label>
+                    <input
+                      type="tel"
+                      value={customerPhone}
+                      onChange={(e) => setCustomerPhone(e.target.value)}
+                      placeholder="Ej: 8888-8888"
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-xs"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Provincia *</label>
+                    <input
+                      type="text"
+                      value={customerProvince}
+                      onChange={(e) => setCustomerProvince(e.target.value)}
+                      placeholder="Ej: San José"
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-xs"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Cantón *</label>
+                    <input
+                      type="text"
+                      value={customerCanton}
+                      onChange={(e) => setCustomerCanton(e.target.value)}
+                      placeholder="Ej: Desamparados"
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-xs"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-3 flex space-x-2">
+                  <button
+                    onClick={saveCartToDrive}
+                    disabled={uploading}
+                    className="flex-1 bg-green-600 text-white font-bold py-2 rounded-lg text-sm"
+                  >
+                    {uploading ? 'Guardando...' : 'Confirmar Pedido'}
+                  </button>
+                  <button
+                    onClick={() => { setCart({}); setUploadedUrl(null); setUploadError(null); }}
+                    className="flex-1 border border-gray-300 font-bold py-2 rounded-lg text-sm"
+                  >
+                    Vaciar
+                  </button>
+                </div>
+                {uploadedUrl && (
+                  <div className="mt-2 text-xs text-green-700 break-words">¡Pedido registrado! <a href={uploadedUrl} target="_blank" rel="noreferrer" className="underline">Ver en Google Sheets</a></div>
+                )}
+                {uploadError && (
+                  <div className="mt-2 text-xs text-red-600">Error: {uploadError}</div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {MERCH_ITEMS.map((item) => (
+          <div key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100 flex flex-col">
+            <div className="h-40 bg-gray-100 flex items-center justify-center relative flex-shrink-0">
+              {item.image ? (
+                <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+              ) : (
+                <Flag className="text-gray-400" size={48} />
+              )}
+              <span className="absolute top-2 right-2 text-xs px-2 py-1 rounded-full font-bold text-gray-800 uppercase" style={{ backgroundColor: COLORS.yellow }}>
+                {item.stock}
+              </span>
+            </div>
+            <div className="p-5 flex flex-col flex-grow">
+              <p className="text-xs font-extrabold uppercase tracking-widest mb-1 font-heading" style={{ color: COLORS.green }}>{item.type}</p>
+              <h3 className="font-bold text-gray-800 text-lg mb-2">{item.name}</h3>
+
+              {/* Selector de paquete para Volantes (ID 2) */}
+              {item.id === 2 && (
+                <div className="mb-4">
+                  <p className="text-xs font-bold text-gray-500 mb-2 uppercase">Paquete de:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {['50 unidades', '100 unidades', '200 unidades'].map((pkg) => (
+                      <button
+                        key={pkg}
+                        onClick={() => setFlyerPackage(pkg)}
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${
+                          flyerPackage === pkg
+                            ? 'text-white border-transparent'
+                            : 'text-gray-600 border-gray-300 hover:border-gray-400'
+                        }`}
+                        style={{
+                          backgroundColor: flyerPackage === pkg ? COLORS.green : 'transparent'
+                        }}
+                      >
+                        {pkg}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Leyenda para Calcomanías (ID 4) */}
+              {item.id === 4 && (
+                <p className="text-sm text-gray-600 mb-3 italic">Set de 3 calcomanías</p>
+              )}
+
+              {/* Checklist de tamaño para la Bandera (ID 1) */}
+              {item.id === 1 && (
+                <div className="mb-4">
+                  <p className="text-xs font-bold text-gray-500 mb-2 uppercase">Seleccionar Tamaño:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {['Pequeña', 'Mediana', 'Grande', 'Carro'].map((size) => (
+                      <button
+                        key={size}
+                        onClick={() => setFlagSize(size)}
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${flagSize === size
+                          ? 'text-white border-transparent'
+                          : 'text-gray-600 border-gray-300 hover:border-gray-400'
+                          }`}
+                        style={{
+                          backgroundColor: flagSize === size ? COLORS.green : 'transparent'
+                        }}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Selector de talla para Camiseta Oficial (ID 3) */}
+              {item.id === 3 && (
+                <div className="mb-4">
+                  <p className="text-xs font-bold text-gray-500 mb-2 uppercase">Seleccionar Talla:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                      <button
+                        key={size}
+                        onClick={() => setShirtSize(size)}
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${shirtSize === size
+                          ? 'text-white border-transparent'
+                          : 'text-gray-600 border-gray-300 hover:border-gray-400'
+                          }`}
+                        style={{
+                          backgroundColor: shirtSize === size ? COLORS.green : 'transparent'
+                        }}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="mt-auto pt-4">
+                <button
+                  onClick={() => addToCart(item.id, item.id === 1 ? flagSize : item.id === 2 ? flyerPackage : item.id === 3 ? shirtSize : undefined)}
+                  className="w-full border-2 font-bold py-2 rounded-lg transition-colors hover:text-white uppercase text-sm tracking-wide"
+                  style={{ borderColor: COLORS.green, color: COLORS.green }}
+                  onMouseOver={(e) => { e.currentTarget.style.backgroundColor = COLORS.green; e.currentTarget.style.color = 'white'; }}
+                  onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = COLORS.green; }}
+                >
+                  Solicitar {item.id === 1 ? `(${flagSize})` : item.id === 2 ? `(${flyerPackage})` : item.id === 3 ? `(${shirtSize})` : ''}
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-12 bg-blue-50 p-6 rounded-xl flex items-start space-x-4">
+        <MapPin className="flex-shrink-0" style={{ color: COLORS.green }} />
+        <div>
+          <h4 className="font-bold font-heading" style={{ color: COLORS.green }}>Puntos de Entrega</h4>
+          <p className="text-sm text-gray-600 mt-1">La entrega de los signos externos se coordina con la persona encargada de tu cantón. Al confirmar el pedido te contactaremos por WhatsApp para los detalles.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SignsPage;
