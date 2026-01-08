@@ -66,7 +66,7 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
             style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
             <Flag className="mr-1" size={18} />
-            Identificáte
+            Propaganda
           </button>
           <button 
             onClick={() => setActiveTab('transporte')}
@@ -74,7 +74,7 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
             style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
             <Bus className="mr-1" size={18} />
-            Votá
+            Te llevamos
           </button>
         </div>
       </div>
