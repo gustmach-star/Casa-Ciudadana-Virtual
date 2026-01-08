@@ -13,7 +13,7 @@ const AIAssistantPage: React.FC = () => {
   const [mode, setMode] = useState<'chat' | 'ideas'>('chat');
   const [input, setInput] = useState('');
   const [chatHistory, setChatHistory] = useState<Message[]>([
-    { role: 'model', text: '¡Hola! Soy Coali, tu Asistente Virtual de La Casa Común. Conozco a fondo nuestro Programa de Gobierno 2026-2030. Preguntame sobre nuestras propuestas en educación, seguridad, economía, ambiente o cualquier otro tema.' }
+    { role: 'model', text: '¡Hola! Soy Coali, tu Asistente Virtual de La Coalición Agenda Ciudadana. Conozco a fondo nuestro Programa de Gobierno 2026-2030. Preguntame sobre nuestras propuestas en educación, seguridad, economía, ambiente o cualquier otro tema.' }
   ]);
   const [ideaResult, setIdeaResult] = useState('');
   const [loading, setLoading] = useState(false);
