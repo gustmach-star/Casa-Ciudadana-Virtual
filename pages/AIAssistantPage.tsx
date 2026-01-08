@@ -84,7 +84,7 @@ const AIAssistantPage: React.FC = () => {
         <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-purple-500 to-indigo-600 text-white rounded-full mb-4 shadow-lg">
           <Sparkles size={32} />
         </div>
-        <h2 className="text-3xl font-bold text-gray-800 mb-2 font-heading">Inteligencia Ciudadana</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2 font-heading">Coali: Tu asistente de IA</h2>
         <p className="text-gray-600 font-body">Hablá con Coali para conocer nuestras propuestas o generar soluciones juntos.</p>
       </div>
 
