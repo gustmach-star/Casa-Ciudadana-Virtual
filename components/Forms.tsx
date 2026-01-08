@@ -26,7 +26,7 @@ export const VolunteerForm: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Únete al Equipo</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Uníte al Equipo</h2>
         <p className="text-gray-600">Esta campaña la ganamos entre todos y todas. ¿Cómo te gustaría ayudar?</p>
       </div>
 

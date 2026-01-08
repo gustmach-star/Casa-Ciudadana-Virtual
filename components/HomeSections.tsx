@@ -28,48 +28,53 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
       
       {/* Left Column: Content */}
       <div className="w-full md:w-1/2 text-center md:text-left text-white pt-24 md:pt-0 mb-4 md:mb-0 z-20">
-        <div className="inline-block px-4 py-1 rounded-full text-xs font-bold tracking-wide mb-4 text-gray-800 shadow-sm" style={{ backgroundColor: COLORS.yellow, fontFamily: 'var(--font-heading)' }}>
+        <div className="inline-block px-4 py-1 rounded-full text-xs font-bold tracking-wide mb-4 text-gray-800 shadow-lg border-2" style={{ backgroundColor: COLORS.yellow, borderColor: COLORS.red, fontFamily: 'var(--font-heading)' }}>
           ELECCIONES 2026
         </div>
         <h1 className="text-4xl md:text-7xl font-extrabold leading-tight mb-6 tracking-tight drop-shadow-sm">
           Tu Casa Ciudadana <br />
-          <span className="text-gray-200 font-bold">Digital</span>
+          Digital
         </h1>
         <p className="text-lg md:text-2xl text-gray-100 mb-6 max-w-lg mx-auto md:mx-0 font-light leading-relaxed drop-shadow-sm">
           Doná, gestioná tu voluntariado, consultá nuestras propuestas, tu centro de votación, solicitá transporte y signos externos de manera virtual.
         </p>
         <div className="grid grid-cols-2 gap-2 max-w-md mx-auto md:mx-0">
           <button 
-            onClick={() => setActiveTab('voluntariado')}
-            className="text-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm bg-red-600/90 hover:bg-red-600"
-            style={{ backgroundColor: COLORS.red }}
+            onClick={() => {
+              const donationSection = document.getElementById('donation-section');
+              if (donationSection) {
+                donationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            className="text-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm bg-red-600/90 hover:bg-red-600 border-4"
+            style={{ backgroundColor: COLORS.red, borderColor: COLORS.yellow }}
           >
             <Heart className="mr-1" size={18} />
             Ayudar
           </button>
           <button 
             onClick={() => setActiveTab('donde-votar')}
-            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm"
-            style={{ color: COLORS.green }}
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
+            style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
             <Search className="mr-1" size={18} />
-            Dónde Voto
+            ¿Dónde Voto?
           </button>
           <button 
             onClick={() => setActiveTab('signos')}
-            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm"
-            style={{ color: COLORS.green }}
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
+            style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
             <Flag className="mr-1" size={18} />
             Identificáte
           </button>
           <button 
             onClick={() => setActiveTab('transporte')}
-            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm"
-            style={{ color: COLORS.green }}
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
+            style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
             <Bus className="mr-1" size={18} />
-            Te Llevamos
+            Votá
           </button>
         </div>
       </div>
@@ -93,9 +98,10 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
 
     {/* Coalition Logo Overlay - Positioned: Mobile (Bottom Right next to photo), Desktop (Top Right) */}
     <img 
-      src="https://res.cloudinary.com/dkw8sr9rj/image/upload/v1763861351/Logo_Claudia_Coalicio%CC%81n_ykkuf2.png" 
+      src="https://res.cloudinary.com/dkw8sr9rj/image/upload/v1766335478/Casilla_yqvdo4.png" 
       alt="Coalición Agenda Ciudadana"
-      className="absolute z-30 bottom-2 right-2 w-36 bg-white/95 p-1 rounded-lg shadow-lg md:shadow-none md:bg-transparent md:p-0 md:w-[24rem] md:top-4 md:right-8 md:bottom-auto"
+      loading="eager"
+      className="absolute z-30 bottom-8 right-2 w-36 bg-white/95 p-1 rounded-lg md:shadow-none md:bg-transparent md:p-0 md:w-[24rem] md:top-4 md:right-8 md:bottom-auto"
     />
   </div>
 );
@@ -132,17 +138,17 @@ export const CountDown: React.FC = () => {
         <span className="text-gray-600 font-bold uppercase tracking-widest text-sm mb-2 md:mb-0 font-heading">Tiempo para las elecciones (1 Feb 2026)</span>
         <div className="flex space-x-4 text-center">
           <div>
-            <span className="text-2xl font-extrabold" style={{ color: COLORS.green }}>{timeLeft.days}</span>
+            <span className="text-xl md:text-2xl font-extrabold" style={{ color: COLORS.yellow }}>{timeLeft.days}</span>
             <span className="block text-xs text-gray-500 font-bold uppercase">Días</span>
           </div>
-          <div className="text-2xl font-bold text-gray-300">:</div>
+          <div className="text-xl md:text-2xl font-bold text-black">:</div>
           <div>
-            <span className="text-2xl font-extrabold" style={{ color: COLORS.green }}>{timeLeft.hours}</span>
+            <span className="text-xl md:text-2xl font-extrabold" style={{ color: COLORS.green }}>{timeLeft.hours}</span>
             <span className="block text-xs text-gray-500 font-bold uppercase">Horas</span>
           </div>
-          <div className="text-2xl font-bold text-gray-300">:</div>
+          <div className="text-xl md:text-2xl font-bold text-black">:</div>
           <div>
-            <span className="text-2xl font-extrabold" style={{ color: COLORS.green }}>{timeLeft.minutes}</span>
+            <span className="text-xl md:text-2xl font-extrabold" style={{ color: COLORS.red }}>{timeLeft.minutes}</span>
             <span className="block text-xs text-gray-500 font-bold uppercase">Min</span>
           </div>
         </div>
@@ -155,8 +161,8 @@ export const Proposals: React.FC = () => {
   return (
     <section className="bg-gray-50 py-16">
        <div className="max-w-4xl mx-auto px-4 text-center">
-         <div className="inline-block p-3 rounded-full mb-4 bg-white shadow-sm border border-gray-100">
-            <Vote size={32} style={{ color: COLORS.green }} />
+         <div className="inline-block p-3 rounded-full mb-4 bg-white shadow-md border-2" style={{ borderColor: COLORS.yellow }}>
+           <Vote size={32} style={{ color: COLORS.red }} />
          </div>
          <h2 className="text-3xl font-bold text-gray-800 mb-4 font-heading">Nuestras Propuestas</h2>
          <p className="text-lg text-gray-600 mb-8 font-body max-w-2xl mx-auto leading-relaxed">
@@ -179,10 +185,10 @@ export const Proposals: React.FC = () => {
 }
 
 export const Donation: React.FC = () => (
-  <div className="text-white py-12 mt-8" style={{ backgroundColor: COLORS.green }}>
+  <div id="donation-section" className="text-white py-12 mt-8" style={{ backgroundColor: COLORS.green }}>
     <div className="max-w-4xl mx-auto px-4 text-center">
-      <div className="inline-block p-3 rounded-full mb-4 bg-white/10">
-        <CreditCard size={32} />
+      <div className="inline-block p-3 rounded-full mb-4 border-4" style={{ backgroundColor: 'white', borderColor: COLORS.yellow }}>
+        <CreditCard size={32} style={{ color: COLORS.red }} />
       </div>
       <h2 className="text-3xl font-bold mb-4">Tu aporte hace la diferencia</h2>
       <p className="text-blue-100 mb-8 max-w-xl mx-auto">
@@ -190,18 +196,18 @@ export const Donation: React.FC = () => (
       </p>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-        <div className="bg-white p-6 rounded-xl" style={{ color: COLORS.green }}>
+        <div className="bg-white p-6 rounded-xl border-4" style={{ color: COLORS.green, borderColor: COLORS.yellow }}>
           <h3 className="font-bold text-lg mb-2 font-heading">SINPE Móvil</h3>
           <p className="text-3xl font-extrabold mb-1 font-heading" style={{ color: COLORS.red }}>6110-3247</p>
           <p className="text-xs text-gray-500">A nombre de Partido Acción Ciudadana</p>
         </div>
-        <div className="bg-white p-6 rounded-xl" style={{ color: COLORS.green }}>
+        <div className="bg-white p-6 rounded-xl border-4" style={{ color: COLORS.green, borderColor: COLORS.red }}>
           <h3 className="font-bold text-lg mb-2 font-heading">Transferencia</h3>
           <p className="font-mono text-sm mb-1 font-bold" style={{ color: COLORS.red }}>CR20015108020011082227</p>
           <p className="text-xs text-gray-500">Banco Nacional</p>
           <p className="text-xs text-gray-500">A nombre de Partido Acción Ciudadana</p>
         </div>
-        <div className="text-white p-6 rounded-xl border border-white/30 flex flex-col justify-center items-center cursor-pointer hover:bg-white/10">
+        <div className="text-white p-6 rounded-xl border-4 flex flex-col justify-center items-center cursor-pointer hover:bg-white/10" style={{ borderColor: COLORS.yellow }}>
           <a 
             href="https://wa.me/50684287549" 
             target="_blank" 

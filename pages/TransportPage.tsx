@@ -14,7 +14,8 @@ const TransportPage: React.FC = () => {
     pickup_location: '',
     preferred_time: '6:00 AM',
     passengers: '1',
-    needs_ramp: false
+    special_condition: '',
+    special_condition_detail: ''
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -133,8 +134,8 @@ const TransportPage: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center p-3 bg-gray-100 rounded-full mb-4" style={{ color: COLORS.green }}>
-          <Bus size={32} />
+        <div className="inline-flex items-center justify-center p-3 rounded-full mb-4 border-4" style={{ backgroundColor: COLORS.green, borderColor: COLORS.yellow }}>
+          <Bus size={32} className="text-white" />
         </div>
         <h2 className="text-3xl font-bold text-gray-800">Transporte Día E</h2>
         <p className="text-gray-600 mt-2">
@@ -155,7 +156,8 @@ const TransportPage: React.FC = () => {
                value={formData.name}
                onChange={handleInputChange}
                required
-               placeholder="Tu nombre completo" 
+               placeholder="Tu nombre completo"
+               aria-label="Nombre del solicitante"
                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none" 
                style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties} 
              />
@@ -169,7 +171,8 @@ const TransportPage: React.FC = () => {
                value={formData.phone}
                onChange={handleInputChange}
                required
-               placeholder="Ej: 8888-8888" 
+               placeholder="Ej: 8888-8888"
+               aria-label="Teléfono o WhatsApp"
                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none" 
                style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties} 
              />
@@ -194,7 +197,7 @@ const TransportPage: React.FC = () => {
              </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
              <div>
                <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Hora preferida</label>
                <select 
@@ -245,18 +248,40 @@ const TransportPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-              <input 
-                type="checkbox"
-                name="needs_ramp"
-                checked={formData.needs_ramp}
-                onChange={(e) => setFormData(prev => ({ ...prev, needs_ramp: e.target.checked }))}
-                className="h-5 w-5 rounded focus:ring-2" 
+            <label className="block text-sm font-bold text-gray-700 mb-2">
+              Tengo una condición especial
+            </label>
+            <select
+              name="special_condition"
+              value={formData.special_condition}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none"
+              style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties}
+            >
+              <option value="">Ninguna</option>
+              <option value="Discapacidad Visual">Discapacidad Visual</option>
+              <option value="Discapacidad Auditiva">Discapacidad Auditiva</option>
+              <option value="Movilidad Reducida">Movilidad Reducida</option>
+              <option value="Otra">Otra</option>
+            </select>
+          </div>
+
+          {formData.special_condition === 'Otra' && (
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">
+                Especifique la condición
+              </label>
+              <input
+                type="text"
+                name="special_condition_detail"
+                value={formData.special_condition_detail}
+                onChange={handleInputChange}
+                placeholder="Describa la condición especial"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none"
                 style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties}
               />
-              <span className="ml-3 text-gray-700 font-bold">Necesito rampa (Ley 7600)</span>
-            </label>
-          </div>
+            </div>
+          )}
 
           <button 
             type="submit" 

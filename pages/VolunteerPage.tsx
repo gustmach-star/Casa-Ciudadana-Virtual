@@ -138,7 +138,10 @@ const VolunteerPage: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Únete al Equipo</h2>
+        <div className="inline-flex items-center justify-center p-3 rounded-full mb-4 border-4" style={{ backgroundColor: COLORS.red, borderColor: COLORS.yellow }}>
+          <Heart size={32} className="text-white" fill="white" />
+        </div>
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">Uníte al Equipo</h2>
         <p className="text-gray-600">Esta campaña la ganamos entre todos y todas. ¿Cómo te gustaría ayudar?</p>
       </div>
 
@@ -151,7 +154,8 @@ const VolunteerPage: React.FC = () => {
               name="full_name"
               value={formData.full_name}
               onChange={handleInputChange}
-              required 
+              required
+              aria-label="Nombre completo"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none" 
               style={{ '--tw-ring-color': COLORS.red } as React.CSSProperties} 
             />
@@ -163,7 +167,8 @@ const VolunteerPage: React.FC = () => {
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              required 
+              required
+              aria-label="Teléfono o WhatsApp"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none" 
               style={{ '--tw-ring-color': COLORS.red } as React.CSSProperties} 
             />
@@ -187,7 +192,7 @@ const VolunteerPage: React.FC = () => {
           <label className="block text-sm font-bold text-gray-700 mb-3 font-heading">Me gustaría colaborar en:</label>
           <div className="space-y-3">
             {['Electorales (Fiscal General, Apoyo en Centro de Votación)', 'Transporte (Día E)', 'Comunicación/Activismo Digital', 'Volanteos y otras actividades públicas', 'Alimentación'].map((role) => (
-              <label key={role} className="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+              <label key={role} className="flex items-center p-3 border rounded-lg hover:bg-gray-50 active:bg-gray-100 cursor-pointer transition-colors">
                 <input 
                   type="checkbox" 
                   checked={formData.roles.includes(role)}

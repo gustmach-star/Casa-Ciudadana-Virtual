@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Flag, MapPin } from 'lucide-react';
+import { Flag, MapPin, ShoppingCart } from 'lucide-react';
 import { COLORS, MERCH_ITEMS } from '../constants';
 import { appendToSheet, formatSignsData, SHEETS } from '../services/googleSheetsService';
 
@@ -19,6 +19,8 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
   const [flagSize, setFlagSize] = useState<string>('Grande');
   const [shirtSize, setShirtSize] = useState<string>('M');
   const [flyerPackage, setFlyerPackage] = useState<string>('50 unidades');
+  const [lonaSize, setLonaSize] = useState<string>('1x1');
+  const [capColor, setCapColor] = useState<string>('Blanco');
   const [customerName, setCustomerName] = useState<string>('');
   const [customerId, setCustomerId] = useState<string>('');
   const [customerPhone, setCustomerPhone] = useState<string>('');
@@ -34,6 +36,7 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
   const addToCart = (id: number, size?: string) => {
     const key = `${id}-${size || ''}`;
     setCart(prev => ({ ...prev, [key]: (prev[key] || 0) + 1 }));
+    setShowCartModal(false); // Asegurar que el modal esté cerrado al agregar items
   };
 
   // Load Google Identity Services (GIS) script and init token client
@@ -157,20 +160,21 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
       <div className="flex justify-between items-end mb-8 border-b pb-4">
         <div>
           <h2 className="text-3xl font-bold text-gray-800">Signos Externos</h2>
-          <p className="text-gray-600 mt-1">Identificáte con la Coalición. Solicitá tu material oficial aquí.</p>
+          <p className="text-gray-600 mt-1">Identificáte con la Coalición. Solicitá tu material oficial y <span className="font-bold">GRATUITO</span> aquí.</p>
         </div>
         {totalItems > 0 && (
-          <div className="relative">
+          <div className="relative md:relative">
             <button
               onClick={() => setShowCartModal(s => !s)}
-              className="text-white px-4 py-2 rounded-full text-sm font-bold animate-bounce uppercase"
+              className="text-white px-4 py-2 rounded-full text-sm font-bold uppercase md:animate-bounce fixed md:static bottom-4 right-4 z-50 shadow-lg md:shadow-none flex items-center space-x-2"
               style={{ backgroundColor: COLORS.green }}
             >
-              {totalItems} Artículos
+              <ShoppingCart size={18} />
+              <span>{totalItems} Artículos</span>
             </button>
 
             {showCartModal && (
-              <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg p-3 text-sm z-20">
+              <div className="fixed md:absolute bottom-20 md:bottom-auto right-4 md:right-0 md:mt-2 w-[calc(100vw-2rem)] md:w-80 max-h-[70vh] overflow-y-auto bg-white rounded-xl shadow-2xl md:shadow-lg p-3 text-sm z-40 md:z-20">
                 <div className="font-bold mb-2">Carrito</div>
                 {Object.entries(cart).map(([key, qty]) => {
                   const [idStr, size] = key.split('-');
@@ -276,14 +280,20 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {MERCH_ITEMS.map((item) => (
-          <div key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100 flex flex-col">
+          <div key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border-2 flex flex-col" style={{ borderColor: COLORS.red }}>
             <div className="h-40 bg-gray-100 flex items-center justify-center relative flex-shrink-0">
               {item.image ? (
-                <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                <img 
+                  src={item.image} 
+                  alt={item.name} 
+                  loading="lazy"
+                  className={`w-full h-full ${item.id === 5 || item.id === 6 ? 'object-contain' : 'object-cover'}`}
+                  style={item.id === 7 ? { objectPosition: 'center 15%' } : item.id === 8 ? { objectPosition: 'center 70%' } : undefined}
+                />
               ) : (
                 <Flag className="text-gray-400" size={48} />
               )}
-              <span className="absolute top-2 right-2 text-xs px-2 py-1 rounded-full font-bold text-gray-800 uppercase" style={{ backgroundColor: COLORS.yellow }}>
+              <span className="absolute top-2 right-2 text-xs px-2 py-1 rounded-full font-bold text-gray-800 uppercase shadow-sm" style={{ backgroundColor: COLORS.yellow }}>
                 {item.stock}
               </span>
             </div>
@@ -369,15 +379,63 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
                 </div>
               )}
 
+              {/* Selector de tamaño para Lonas (ID 5) */}
+              {item.id === 5 && (
+                <div className="mb-4">
+                  <p className="text-xs font-bold text-gray-500 mb-2 uppercase">Seleccionar Tamaño:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {['1x1', '1x2', '1.5x3'].map((size) => (
+                      <button
+                        key={size}
+                        onClick={() => setLonaSize(size)}
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${lonaSize === size
+                          ? 'text-white border-transparent'
+                          : 'text-gray-600 border-gray-300 hover:border-gray-400'
+                          }`}
+                        style={{
+                          backgroundColor: lonaSize === size ? COLORS.green : 'transparent'
+                        }}
+                      >
+                        {size} mts
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Selector de color para Gorras (ID 7) */}
+              {item.id === 7 && (
+                <div className="mb-4">
+                  <p className="text-xs font-bold text-gray-500 mb-2 uppercase">Seleccionar Color:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {['Blanco', 'Amarillo', 'Rojo', 'Verde'].map((color) => (
+                      <button
+                        key={color}
+                        onClick={() => setCapColor(color)}
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${capColor === color
+                          ? 'text-white border-transparent'
+                          : 'text-gray-600 border-gray-300 hover:border-gray-400'
+                          }`}
+                        style={{
+                          backgroundColor: capColor === color ? COLORS.green : 'transparent'
+                        }}
+                      >
+                        {color}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="mt-auto pt-4">
                 <button
-                  onClick={() => addToCart(item.id, item.id === 1 ? flagSize : item.id === 2 ? flyerPackage : item.id === 3 ? shirtSize : undefined)}
+                  onClick={() => addToCart(item.id, item.id === 1 ? flagSize : item.id === 2 ? flyerPackage : item.id === 3 ? shirtSize : item.id === 5 ? lonaSize : item.id === 7 ? capColor : undefined)}
                   className="w-full border-2 font-bold py-2 rounded-lg transition-colors hover:text-white uppercase text-sm tracking-wide"
                   style={{ borderColor: COLORS.green, color: COLORS.green }}
                   onMouseOver={(e) => { e.currentTarget.style.backgroundColor = COLORS.green; e.currentTarget.style.color = 'white'; }}
                   onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = COLORS.green; }}
                 >
-                  Solicitar {item.id === 1 ? `(${flagSize})` : item.id === 2 ? `(${flyerPackage})` : item.id === 3 ? `(${shirtSize})` : ''}
+                  Solicitar {item.id === 1 ? `(${flagSize})` : item.id === 2 ? `(${flyerPackage})` : item.id === 3 ? `(${shirtSize})` : item.id === 5 ? `(${lonaSize} mts)` : item.id === 7 ? `(${capColor})` : ''}
                 </button>
               </div>
             </div>

@@ -77,6 +77,7 @@ const VotingCenter: React.FC = () => {
                 onChange={(e) => setCedula(e.target.value.replace(/[^0-9]/g, ''))}
                 maxLength={9}
                 placeholder="Ej: 101110111"
+                aria-label="Número de cédula"
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all font-body text-lg tracking-widest"
                 style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties}
               />

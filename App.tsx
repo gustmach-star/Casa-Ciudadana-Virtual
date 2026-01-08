@@ -52,7 +52,7 @@ export default function App() {
         {renderContent()}
       </main>
 
-      {activeTab !== 'home' && <Footer />}
+      <Footer />
     </div>
   );
 }

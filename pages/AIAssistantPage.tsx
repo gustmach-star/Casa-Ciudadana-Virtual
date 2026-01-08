@@ -110,7 +110,7 @@ const AIAssistantPage: React.FC = () => {
 
       {/* CHAT MODE */}
       {mode === 'chat' && (
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 h-[500px] flex flex-col">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 h-[60vh] md:h-[500px] flex flex-col">
           <div className="bg-indigo-600 p-4 text-white font-bold flex justify-between items-center">
             <span>Chat con Coali</span>
             <span className="text-xs bg-indigo-500 px-2 py-1 rounded text-indigo-100">Powered by Gemini</span>
@@ -148,6 +148,7 @@ const AIAssistantPage: React.FC = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Preguntá sobre nuestras propuestas..."
+              aria-label="Escribir mensaje a Coali"
               className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
               disabled={loading}
             />

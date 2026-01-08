@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { COLORS } from '../constants';
 
 const Footer: React.FC = () => {
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
@@ -6,20 +7,26 @@ const Footer: React.FC = () => {
 
   return (
     <>
-      <footer className="bg-gray-900 text-gray-400 py-8 text-center text-sm">
+      <footer className="bg-gray-900 py-8 text-center text-sm">
         <div className="max-w-6xl mx-auto px-4">
-          <p className="mb-2">&copy; 2026 La Casa Común. Todos los derechos reservados.</p>
-          <p>
+          <p className="mb-2 text-gray-400">&copy; 2026 La Casa Común. Todos los derechos reservados.</p>
+          <p className="flex items-center justify-center gap-2">
             <button 
               onClick={() => setShowPrivacyModal(true)} 
-              className="hover:text-white underline cursor-pointer"
+              className="underline cursor-pointer transition-colors font-bold"
+              style={{ color: COLORS.yellow }}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'white'}
+              onMouseLeave={(e) => e.currentTarget.style.color = COLORS.yellow}
             >
               Política de Privacidad
             </button>
-            {' | '}
+            <span className="text-gray-400">|</span>
             <button 
               onClick={() => setShowTermsModal(true)} 
-              className="hover:text-white underline cursor-pointer"
+              className="underline cursor-pointer transition-colors font-bold"
+              style={{ color: COLORS.yellow }}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'white'}
+              onMouseLeave={(e) => e.currentTarget.style.color = COLORS.yellow}
             >
               Términos de Uso
             </button>

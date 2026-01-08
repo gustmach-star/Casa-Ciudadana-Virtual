@@ -6,7 +6,7 @@ const VotingPage: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
       <div className="text-center mb-10">
-        <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-green-500 to-green-700 text-white rounded-full mb-6 shadow-lg">
+        <div className="inline-flex items-center justify-center p-4 text-white rounded-full mb-6 shadow-lg border-4" style={{ backgroundColor: COLORS.green, borderColor: COLORS.yellow }}>
           <MapPin size={40} />
         </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-4 font-heading">¿Dónde me toca votar?</h2>
