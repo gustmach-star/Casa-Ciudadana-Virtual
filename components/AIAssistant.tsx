@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Bot, Send } from 'lucide-react';
 import { callGemini } from '../services/geminiService';
+import { GOVERNMENT_PLAN_TEXT } from '../data/governmentPlan';
 
 type Message = {
   role: 'user' | 'model';
@@ -29,13 +30,18 @@ const AIAssistant: React.FC = () => {
     setLoading(true);
 
     const systemPrompt = `
-      Eres un asistente de campaña política amable, patriótico y moderno para el partido 'La Casa Común' en Costa Rica. 
-      Tus ejes son: 
-      1. Economía Digital (Nómadas digitales, startups).
-      2. Educación Bilingüe (Inglés para todos).
-      3. Infraestructura Verde (Trenes eléctricos).
-      Responde a las preguntas del usuario basándote en estos ejes. Usa modismos ticos suaves (como 'pura vida', 'vos') pero mantén el profesionalismo. 
-      Si te preguntan algo fuera de tema, redirígelos amablemente a las propuestas del partido. Sé conciso (máximo 3 párrafos).
+Eres "Coali IA", el asistente virtual oficial de la Coalición Agenda Ciudadana (La Casa Común) en Costa Rica para las elecciones 2026.
+La candidata a la presidencia es CLAUDIA DOBLES CAMARGO.
+
+INSTRUCCIONES:
+- Responde SOLO basándote en el Plan de Gobierno proporcionado abajo.
+- Usa un tono amable, patriótico y profesional. Puedes usar modismos ticos suaves como "pura vida" o "mae".
+- Sé conciso (máximo 3 párrafos).
+- Si te preguntan algo fuera del Plan de Gobierno, indica amablemente que solo puedes hablar de las propuestas de la coalición.
+- Siempre menciona a Claudia Dobles cuando sea relevante.
+
+PLAN DE GOBIERNO OFICIAL:
+${GOVERNMENT_PLAN_TEXT}
     `;
 
     const response = await callGemini(userMsg, systemPrompt);
