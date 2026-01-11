@@ -3,13 +3,24 @@ import { google } from 'googleapis';
 
 // Configurar autenticación con Service Account
 const getAuthClient = () => {
-  const credentials = {
-    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    private_key: process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-  };
+  const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+  let privateKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY || '';
+  
+  // Manejar diferentes formatos de la private key
+  // Puede venir con \n literal o con saltos de línea reales
+  if (privateKey.includes('\\n')) {
+    privateKey = privateKey.replace(/\\n/g, '\n');
+  }
+  
+  console.log('Service Account Email:', email);
+  console.log('Private Key exists:', !!privateKey);
+  console.log('Private Key starts with:', privateKey.substring(0, 30));
 
   return new google.auth.GoogleAuth({
-    credentials,
+    credentials: {
+      client_email: email,
+      private_key: privateKey,
+    },
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
 };
@@ -66,9 +77,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ success: true, message: 'Datos guardados correctamente' });
   } catch (error: any) {
     console.error('Error writing to Google Sheets:', error);
+    console.error('Error details:', JSON.stringify(error, null, 2));
     return res.status(500).json({ 
       error: 'Error al guardar datos', 
-      details: error.message 
+      details: error.message,
+      code: error.code,
+      status: error.status
     });
   }
 }
