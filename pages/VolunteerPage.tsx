@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { COLORS } from '../constants';
 import { appendToSheet, formatVolunteerData, SHEETS } from '../services/googleSheetsService';
-
-declare global {
-  interface Window { google?: any }
-}
 
 const VolunteerPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -16,78 +12,10 @@ const VolunteerPage: React.FC = () => {
     roles: [] as string[]
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [tokenClient, setTokenClient] = useState<any>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  // Load Google Identity Services (GIS) script and init token client
-  useEffect(() => {
-    const existing = document.getElementById('google-identity');
-    if (!existing) {
-      const script = document.createElement('script');
-      script.src = 'https://accounts.google.com/gsi/client';
-      script.id = 'google-identity';
-      script.async = true;
-      script.defer = true;
-      script.onload = () => initTokenClient();
-      document.body.appendChild(script);
-    } else {
-      initTokenClient();
-    }
-
-    function initTokenClient() {
-      try {
-        const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
-        if (!clientId) return;
-        const gis = (window as any).google?.accounts?.oauth2;
-        if (!gis) return;
-        const tc = gis.initTokenClient({
-          client_id: clientId,
-          scope: 'https://www.googleapis.com/auth/spreadsheets',
-          callback: (tokenResponse: any) => {
-            setAccessToken(tokenResponse.access_token);
-          }
-        });
-        setTokenClient(tc);
-      } catch (err) {
-        console.error('Error initializing token client:', err);
-      }
-    }
-  }, []);
-
-  const ensureAccessToken = (): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      try {
-        if (accessToken) {
-          resolve(accessToken);
-          return;
-        }
-        if (!tokenClient) {
-          reject(new Error('Token client no disponible. Por favor recarga la página.'));
-          return;
-        }
-        
-        // Set up callback before requesting token
-        const currentTokenClient = tokenClient;
-        currentTokenClient.callback = (tokenResponse: any) => {
-          if (tokenResponse.access_token) {
-            setAccessToken(tokenResponse.access_token);
-            resolve(tokenResponse.access_token);
-          } else {
-            reject(new Error('No se obtuvo el token de acceso'));
-          }
-        };
-        
-        // Request the token
-        currentTokenClient.requestAccessToken({ prompt: 'consent' });
-      } catch (err) {
-        reject(err);
-      }
-    });
   };
 
   const handleRoleChange = (role: string) => {
@@ -104,14 +32,11 @@ const VolunteerPage: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Get OAuth token
-      const token = await ensureAccessToken();
-
       // Format data for Google Sheets
       const rowData = formatVolunteerData(formData);
 
-      // Send to Google Sheets
-      await appendToSheet(token, SHEETS.SUMARME, rowData);
+      // Send to Google Sheets via serverless API
+      await appendToSheet(null, SHEETS.SUMARME, rowData);
 
       setSubmitted(true);
     } catch (error) {

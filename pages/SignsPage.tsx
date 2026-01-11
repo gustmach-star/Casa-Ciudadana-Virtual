@@ -1,12 +1,8 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Flag, MapPin, ShoppingCart } from 'lucide-react';
 import { COLORS, MERCH_ITEMS } from '../constants';
 import { appendToSheet, formatSignsData, SHEETS } from '../services/googleSheetsService';
-
-declare global {
-  interface Window { google?: any }
-}
 
 interface SignsPageProps {
   cart: Record<string, number>;
@@ -26,8 +22,6 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
   const [customerPhone, setCustomerPhone] = useState<string>('');
   const [customerProvince, setCustomerProvince] = useState<string>('');
   const [customerCanton, setCustomerCanton] = useState<string>('');
-  const [tokenClient, setTokenClient] = useState<any>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
@@ -37,62 +31,6 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
     const key = `${id}-${size || ''}`;
     setCart(prev => ({ ...prev, [key]: (prev[key] || 0) + 1 }));
     setShowCartModal(false); // Asegurar que el modal esté cerrado al agregar items
-  };
-
-  // Load Google Identity Services (GIS) script and init token client
-  useEffect(() => {
-    const existing = document.getElementById('google-identity');
-    if (!existing) {
-      const script = document.createElement('script');
-      script.src = 'https://accounts.google.com/gsi/client';
-      script.id = 'google-identity';
-      script.async = true;
-      script.defer = true;
-      script.onload = () => initTokenClient();
-      document.body.appendChild(script);
-    } else {
-      initTokenClient();
-    }
-
-    function initTokenClient() {
-      try {
-        const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
-        if (!clientId) return;
-        const gis = (window as any).google?.accounts?.oauth2;
-        if (!gis) return;
-        const tc = gis.initTokenClient({
-          client_id: clientId,
-          scope: 'https://www.googleapis.com/auth/spreadsheets',
-          callback: (resp: any) => {
-            if (resp && resp.access_token) setAccessToken(resp.access_token);
-          }
-        });
-        setTokenClient(tc);
-      } catch (e) {
-        // ignore until script loads
-      }
-    }
-  }, []);
-
-  const ensureAccessToken = async () => {
-    if (accessToken) return accessToken;
-    if (!tokenClient) throw new Error('Client de Google no inicializado. Setea VITE_GOOGLE_CLIENT_ID y recarga.');
-    return new Promise<string>((resolve, reject) => {
-      try {
-        const currentTokenClient = tokenClient;
-        currentTokenClient.callback = (tokenResponse: any) => {
-          if (tokenResponse.access_token) {
-            setAccessToken(tokenResponse.access_token);
-            resolve(tokenResponse.access_token);
-          } else {
-            reject(new Error('No se obtuvo el token de acceso'));
-          }
-        };
-        currentTokenClient.requestAccessToken({ prompt: 'consent' });
-      } catch (err) {
-        reject(err);
-      }
-    });
   };
 
   const saveCartToDrive = async () => {
@@ -108,16 +46,11 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
         throw new Error('Por favor completa todos los campos requeridos (nombre, cédula, teléfono, provincia y cantón).');
       }
 
-      // Ensure token
-      const token = await ensureAccessToken();
-
-      // Format data for Google Sheets (ahora incluye nombre, cédula, teléfono, provincia y cantón)
+      // Format data for Google Sheets
       const rowData = formatSignsData(cart, MERCH_ITEMS, customerName, customerId, customerPhone, customerProvince, customerCanton);
 
-      // Append to Google Sheets
-      await appendToSheet(token, SHEETS.IDENTIFICATE, rowData);
-
-      setUploadedUrl('https://docs.google.com/spreadsheets/d/19CeLOvIVzwUiGR6XYi41Y-jjpdJt5u--fs0mwZfIiPQ/edit?gid=1376903276#gid=1376903276');
+      // Append to Google Sheets via serverless API
+      await appendToSheet(null, SHEETS.IDENTIFICATE, rowData);
       
       // Clear cart and form after successful submission
       setCart({});

@@ -1,44 +1,40 @@
 // Google Sheets Service para enviar datos al spreadsheet de la campaña
-// Spreadsheet ID: 19CeLOvIVzwUiGR6XYi41Y-jjpdJt5u--fs0mwZfIiPQ
+// Usa API serverless para autenticación segura con Service Account
 
 const SPREADSHEET_ID = '19CeLOvIVzwUiGR6XYi41Y-jjpdJt5u--fs0mwZfIiPQ';
 
 // Nombres de las pestañas según el documento
 const SHEETS = {
-  IDENTIFICATE: 'Identificáte',
-  TRANSPORTE: 'Te llevamos a Votar',
+  IDENTIFICATE: 'Identificate',
+  TRANSPORTE: 'Transporte',
   SUMARME: 'Sumarme'
 };
 
 /**
  * Agrega una fila de datos a una pestaña específica del Google Sheet
- * @param accessToken Token de acceso OAuth2 de Google
- * @param sheetName Nombre de la pestaña (ej: "Identificáte")
+ * Usa la API serverless en /api/sheets para autenticación segura
+ * @param sheetName Nombre de la pestaña (ej: "Identificate")
  * @param values Array de valores a agregar como fila
  */
 export async function appendToSheet(
-  accessToken: string,
+  _accessToken: string | null, // Mantenemos para compatibilidad, pero ya no se usa
   sheetName: string,
   values: any[]
 ): Promise<any> {
-  const range = `${sheetName}!A:Z`; // Rango completo de la pestaña
-  
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(range)}:append?valueInputOption=USER_ENTERED`;
-
-  const response = await fetch(url, {
+  const response = await fetch('/api/sheets', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      values: [values]
+      sheetName,
+      rowData: values
     })
   });
 
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Error al escribir en Google Sheets: ${response.status} - ${error}`);
+    const error = await response.json();
+    throw new Error(error.error || 'Error al guardar datos');
   }
 
   return await response.json();
