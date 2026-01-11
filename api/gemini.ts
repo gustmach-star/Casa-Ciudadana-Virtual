@@ -123,7 +123,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     );
 
     if (!response.ok) {
-      console.error('Gemini API error:', response.status);
+      const errorData = await response.text();
+      console.error('Gemini API error:', response.status, errorData);
       return res.status(500).json({ error: 'Error al procesar tu consulta' });
     }
 
