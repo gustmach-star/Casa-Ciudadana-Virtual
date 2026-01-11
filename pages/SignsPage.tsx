@@ -96,10 +96,10 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
           <p className="text-gray-600 mt-1">Identificáte con la Coalición. Solicitá tu material oficial y <span className="font-bold">GRATUITO</span> aquí.</p>
         </div>
         {totalItems > 0 && (
-          <div className="relative md:relative">
+          <div className="fixed bottom-4 right-4 z-50 md:bottom-6 md:right-6">
             <button
               onClick={() => setShowCartModal(s => !s)}
-              className="text-white px-4 py-2 rounded-full text-sm font-bold uppercase md:animate-bounce fixed md:static bottom-4 right-4 z-50 shadow-lg md:shadow-none flex items-center space-x-2"
+              className="text-white px-4 py-2 rounded-full text-sm font-bold uppercase animate-bounce shadow-lg flex items-center space-x-2"
               style={{ backgroundColor: COLORS.green }}
             >
               <ShoppingCart size={18} />
@@ -107,7 +107,7 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
             </button>
 
             {showCartModal && (
-              <div className="fixed md:absolute bottom-20 md:bottom-auto right-4 md:right-0 md:mt-2 w-[calc(100vw-2rem)] md:w-80 max-h-[70vh] overflow-y-auto bg-white rounded-xl shadow-2xl md:shadow-lg p-3 text-sm z-40 md:z-20">
+              <div className="absolute bottom-14 right-0 w-80 max-w-[calc(100vw-2rem)] max-h-[70vh] overflow-y-auto bg-white rounded-xl shadow-2xl p-3 text-sm z-40">
                 <div className="font-bold mb-2">Carrito</div>
                 {Object.entries(cart).map(([key, qty]) => {
                   const [idStr, size] = key.split('-');
