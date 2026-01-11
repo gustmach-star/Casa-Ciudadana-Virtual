@@ -30,14 +30,24 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
-// Sanitizar entrada para prevenir inyección
-function sanitizeInput(input: string): string {
+// Sanitizar entrada del usuario (corta)
+function sanitizeUserInput(input: string): string {
   if (typeof input !== 'string') return '';
   return input
     .trim()
-    .slice(0, 2000) // Limitar longitud
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // Remover scripts
-    .replace(/[<>]/g, ''); // Remover caracteres HTML peligrosos
+    .slice(0, 2000) // Limitar longitud para prompts de usuario
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/[<>]/g, '');
+}
+
+// Sanitizar system instruction (permite más contenido para el plan de gobierno)
+function sanitizeSystemInstruction(input: string): string {
+  if (typeof input !== 'string') return '';
+  return input
+    .trim()
+    .slice(0, 50000) // Hasta 50KB para el plan de gobierno completo
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/[<>]/g, '');
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -76,8 +86,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Prompt requerido' });
     }
 
-    const sanitizedPrompt = sanitizeInput(prompt);
-    const sanitizedSystem = systemInstruction ? sanitizeInput(systemInstruction) : '';
+    const sanitizedPrompt = sanitizeUserInput(prompt);
+    const sanitizedSystem = systemInstruction ? sanitizeSystemInstruction(systemInstruction) : '';
 
     if (sanitizedPrompt.length < 2) {
       return res.status(400).json({ error: 'Prompt muy corto' });
