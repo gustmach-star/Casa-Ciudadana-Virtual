@@ -119,7 +119,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             parts: [{ text: sanitizedSystem }]
           } : undefined,
           generationConfig: {
-            maxOutputTokens: 1024,
+            maxOutputTokens: 4096,
             temperature: 0.7,
           },
           safetySettings: [
