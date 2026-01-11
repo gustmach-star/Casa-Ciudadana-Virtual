@@ -142,6 +142,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(500).json({ error: 'Error de autenticación con Gemini', detail: 'auth_error' });
       } else if (response.status === 404) {
         return res.status(500).json({ error: 'Modelo no encontrado', detail: 'model_not_found' });
+      } else if (response.status === 429) {
+        return res.status(503).json({ error: 'Servicio temporalmente no disponible. Intenta en unos minutos.', detail: 'rate_limit' });
       }
       return res.status(500).json({ error: 'Error al procesar tu consulta', detail: response.status });
     }
