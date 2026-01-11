@@ -1,29 +1,34 @@
 
-import { GoogleGenAI } from "@google/genai";
+// Gemini Service - Usa API serverless para proteger la API key
 
 export const callGemini = async (prompt: string, systemInstruction: string = ""): Promise<string> => {
   try {
-    // Get API key from Vite environment variables
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    
-    if (!apiKey || apiKey === 'PLACEHOLDER_API_KEY') {
-      console.error("API Key missing or not configured");
-      return "Error: La API de Gemini no está configurada. Por favor contacta al administrador del sitio para obtener acceso al asistente virtual.";
-    }
-
-    const ai = new GoogleGenAI({ apiKey });
-    
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
-      config: {
-        systemInstruction: systemInstruction,
-      }
+    const response = await fetch('/api/gemini', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt,
+        systemInstruction
+      })
     });
 
-    return response.text || "Lo siento, estoy teniendo problemas para conectar con la base de datos de propuestas. Intenta de nuevo.";
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("Gemini API Error:", error);
+      
+      if (response.status === 429) {
+        return "Estás enviando muchas consultas. Por favor espera un momento antes de intentar de nuevo.";
+      }
+      
+      return "Hubo un error al procesar tu consulta. Por favor intenta nuevamente.";
+    }
+
+    const data = await response.json();
+    return data.text || "Lo siento, estoy teniendo problemas para conectar. Intenta de nuevo.";
   } catch (error) {
-    console.error("Gemini API Error:", error);
+    console.error("Gemini Service Error:", error);
     return "Hubo un error de conexión. Por favor verifica tu internet e intenta nuevamente.";
   }
 };
