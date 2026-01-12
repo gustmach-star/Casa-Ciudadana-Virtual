@@ -59,7 +59,7 @@ const AIAssistantPage: React.FC = () => {
           <Sparkles size={32} />
         </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-2 font-heading">Coali: Tu asistente de IA</h2>
-        <p className="text-gray-600 font-body">Hablá con Coali para conocer nuestras propuestas o generar soluciones juntos.</p>
+        <p className="text-gray-600 font-body">Hablá con Coali y preguntále por nuestras propuestas para conocer más sobre nuestro Programa de Gobierno.</p>
       </div>
 
       {/* CHAT MODE */}
