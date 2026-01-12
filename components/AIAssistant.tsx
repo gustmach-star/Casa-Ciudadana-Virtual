@@ -107,7 +107,7 @@ ${GOVERNMENT_PLAN_TEXT}
               disabled={loading || !input.trim()}
               className="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-full transition-colors disabled:opacity-50"
             >
-              <Send size={20} />
+              <Send size={24} />
             </button>
           </form>
         </div>

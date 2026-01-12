@@ -117,7 +117,7 @@ const TransportPage: React.FC = () => {
                  style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties} 
                />
                <button type="button" className="bg-gray-100 px-4 border border-l-0 border-gray-300 rounded-r-lg hover:bg-gray-200 text-gray-600">
-                 <MapPin size={20} />
+                 <MapPin size={24} />
                </button>
              </div>
           </div>

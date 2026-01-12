@@ -90,7 +90,7 @@ export const TransportRequest: React.FC = () => {
              <div className="flex">
                <input type="text" placeholder="Dirección exacta o link de Waze" className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-2 outline-none" style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties} />
                <button className="bg-gray-100 px-4 border border-l-0 border-gray-300 rounded-r-lg hover:bg-gray-200 text-gray-600">
-                 <MapPin size={20} />
+                 <MapPin size={24} />
                </button>
              </div>
           </div>

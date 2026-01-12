@@ -35,7 +35,7 @@ const VotingPage: React.FC = () => {
           className="inline-flex items-center justify-center w-full text-white font-bold py-4 px-6 rounded-lg transition-all transform hover:scale-105 hover:shadow-xl uppercase tracking-wide shadow-md"
           style={{ backgroundColor: COLORS.green }}
         >
-          <ExternalLink size={20} className="mr-2" />
+          <ExternalLink size={24} className="mr-2" />
           Ir a Consulta del TSE
         </a>
 
