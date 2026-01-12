@@ -50,7 +50,7 @@ export const VolunteerForm: React.FC = () => {
         <div>
           <label className="block text-sm font-bold text-gray-700 mb-3 font-heading">Me gustaría colaborar en:</label>
           <div className="space-y-3">
-            {['Electorales (Fiscal General, Apoyo en Centro de Votación)', 'Transporte (Día E)', 'Comunicación/Activismo Digital', 'Volanteos y otras actividades públicas', 'Alimentación'].map((role) => (
+            {['Electorales (Apoyo en Centro de Votación)', 'Transporte (Día E)', 'Comunicación/Activismo Digital', 'Volanteos y otras actividades públicas', 'Alimentación'].map((role) => (
               <label key={role} className="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
                 <input type="checkbox" className="h-5 w-5 rounded focus:ring-red-500" style={{ color: COLORS.red }} />
                 <span className="ml-3 text-gray-700">{role}</span>

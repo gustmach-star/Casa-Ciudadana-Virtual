@@ -116,7 +116,7 @@ const VolunteerPage: React.FC = () => {
         <div>
           <label className="block text-sm font-bold text-gray-700 mb-3 font-heading">Me gustaría colaborar en:</label>
           <div className="space-y-3">
-            {['Electorales (Fiscal General, Apoyo en Centro de Votación)', 'Transporte (Día E)', 'Comunicación/Activismo Digital', 'Volanteos y otras actividades públicas', 'Alimentación'].map((role) => (
+            {['Electorales (Apoyo en Centro de Votación)', 'Transporte (Día E)', 'Comunicación/Activismo Digital', 'Volanteos y otras actividades públicas', 'Alimentación'].map((role) => (
               <label key={role} className="flex items-center p-3 border rounded-lg hover:bg-gray-50 active:bg-gray-100 cursor-pointer transition-colors">
                 <input 
                   type="checkbox" 
