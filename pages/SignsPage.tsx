@@ -226,7 +226,10 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
               ) : (
                 <Flag className="text-gray-400" size={48} />
               )}
-              <span className="absolute top-2 right-2 text-xs px-2 py-1 rounded-full font-bold text-gray-800 uppercase shadow-sm" style={{ backgroundColor: COLORS.yellow }}>
+              <span 
+                className={`absolute top-2 right-2 text-xs px-2 py-1 rounded-full font-bold uppercase shadow-sm ${item.stock === 'Agotado' ? 'text-white' : 'text-gray-800'}`} 
+                style={{ backgroundColor: item.stock === 'Agotado' ? COLORS.red : COLORS.yellow }}
+              >
                 {item.stock}
               </span>
             </div>
