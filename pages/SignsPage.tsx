@@ -366,12 +366,13 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
               <div className="mt-auto pt-4">
                 <button
                   onClick={() => addToCart(item.id, item.id === 1 ? flagSize : item.id === 2 ? flyerPackage : item.id === 3 ? shirtSize : item.id === 5 ? lonaSize : item.id === 7 ? capColor : undefined)}
-                  className="w-full border-2 font-bold py-2 rounded-lg transition-colors hover:text-white uppercase text-sm tracking-wide"
-                  style={{ borderColor: COLORS.green, color: COLORS.green }}
-                  onMouseOver={(e) => { e.currentTarget.style.backgroundColor = COLORS.green; e.currentTarget.style.color = 'white'; }}
-                  onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = COLORS.green; }}
+                  disabled={item.stock === 'Agotado'}
+                  className={`w-full border-2 font-bold py-2 rounded-lg transition-colors uppercase text-sm tracking-wide ${item.stock === 'Agotado' ? 'opacity-50 cursor-not-allowed' : 'hover:text-white'}`}
+                  style={{ borderColor: item.stock === 'Agotado' ? '#9ca3af' : COLORS.green, color: item.stock === 'Agotado' ? '#9ca3af' : COLORS.green }}
+                  onMouseOver={(e) => { if (item.stock !== 'Agotado') { e.currentTarget.style.backgroundColor = COLORS.green; e.currentTarget.style.color = 'white'; } }}
+                  onMouseOut={(e) => { if (item.stock !== 'Agotado') { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = COLORS.green; } }}
                 >
-                  Solicitar {item.id === 1 ? `(${flagSize})` : item.id === 2 ? `(${flyerPackage})` : item.id === 3 ? `(${shirtSize})` : item.id === 5 ? `(${lonaSize} mts)` : item.id === 7 ? `(${capColor})` : ''}
+                  {item.stock === 'Agotado' ? 'No Disponible' : `Solicitar ${item.id === 1 ? `(${flagSize})` : item.id === 2 ? `(${flyerPackage})` : item.id === 3 ? `(${shirtSize})` : item.id === 5 ? `(${lonaSize} mts)` : item.id === 7 ? `(${capColor})` : ''}`}
                 </button>
               </div>
             </div>
