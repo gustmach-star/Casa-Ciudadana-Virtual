@@ -4,16 +4,16 @@ import { MapPin, Users, Heart, Search, ChevronRight, Vote, CreditCard, MessageSq
 import { COLORS } from '../constants';
 
 export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setActiveTab }) => (
-  <div className="relative overflow-hidden min-h-[700px] md:min-h-[900px] flex items-center bg-white">
+  <div className="relative overflow-hidden min-h-[700px] xl:min-h-[900px] flex items-center bg-white">
     
     {/* Green Background Shape (Diagonal Split) */}
-    <div className="hero-bg-shape absolute top-0 left-0 w-full md:w-[60%] h-[55%] md:h-full z-0" 
+    <div className="hero-bg-shape absolute top-0 left-0 w-full xl:w-[60%] h-[55%] xl:h-full z-0" 
          style={{ 
            background: `linear-gradient(120deg, ${COLORS.green} 0%, ${COLORS.greenDark} 100%)`,
            clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0% 100%)' // Default mobile clip
          }}>
          <style>{`
-           @media (min-width: 768px) {
+           @media (min-width: 1280px) {
              .hero-bg-shape {
                clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%) !important;
              }
@@ -24,21 +24,21 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
     {/* Pattern Overlay (Left Side Only) */}
     <div className="absolute inset-0 opacity-10 pattern-grid-lg text-white z-0 pointer-events-none" style={{ width: '100%', maxWidth: '65%' }}></div>
 
-    <div className="max-w-7xl mx-auto px-4 relative z-10 w-full flex flex-col md:flex-row items-center h-full">
+    <div className="max-w-7xl mx-auto px-4 relative z-10 w-full flex flex-col xl:flex-row items-center h-full">
       
       {/* Left Column: Content */}
-      <div className="w-full md:w-1/2 text-center md:text-left text-white pt-24 md:pt-0 mb-4 md:mb-0 z-20">
+      <div className="w-full xl:w-1/2 text-center xl:text-left text-white pt-24 xl:pt-0 mb-4 xl:mb-0 z-20">
         <div className="inline-block px-4 py-1 rounded-full text-xs font-bold tracking-wide mb-4 text-gray-800 shadow-lg border-2" style={{ backgroundColor: COLORS.yellow, borderColor: COLORS.red, fontFamily: 'var(--font-heading)' }}>
           ELECCIONES 2026
         </div>
-        <h1 className="text-4xl md:text-7xl font-extrabold leading-tight mb-6 tracking-tight drop-shadow-sm">
+        <h1 className="text-4xl md:text-5xl xl:text-7xl font-extrabold leading-tight mb-6 tracking-tight drop-shadow-sm">
           Tu Casa Ciudadana <br />
           Digital
         </h1>
-        <p className="text-lg md:text-2xl text-gray-100 mb-6 max-w-lg mx-auto md:mx-0 font-light leading-relaxed drop-shadow-sm">
+        <p className="text-lg md:text-xl xl:text-2xl text-gray-100 mb-6 max-w-lg mx-auto xl:mx-0 font-light leading-relaxed drop-shadow-sm">
           Doná, gestioná tu voluntariado, consultá nuestras propuestas, tu centro de votación, solicitá transporte y signos externos de manera virtual.
         </p>
-        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto md:mx-0">
+        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto xl:mx-0">
           <button 
             onClick={() => {
               const donationSection = document.getElementById('donation-section');
@@ -80,13 +80,13 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
       </div>
 
       {/* Right Column: Candidate Image on White Background */}
-      <div className="w-full md:w-1/2 flex justify-center md:justify-end items-end relative mt-0 h-full pointer-events-none flex-grow md:flex-grow-0">
-         <div className="relative w-full flex justify-center md:justify-end items-end h-full">
+      <div className="w-full xl:w-1/2 flex justify-center xl:justify-end items-end relative mt-0 h-full pointer-events-none flex-grow xl:flex-grow-0">
+         <div className="relative w-full flex justify-center xl:justify-end items-end h-full">
             {/* Candidate Image - High Z-Index */}
             <img 
               src="https://res.cloudinary.com/dkw8sr9rj/image/upload/v1763858459/Foto_Claudia_Transp_Grande_kl17s0.png" 
               alt="Candidata Claudia Dobles" 
-              className="relative z-20 w-[130%] max-w-none mx-auto h-auto object-contain origin-bottom scale-135 -translate-y-4 md:w-full md:max-w-[1200px] md:mx-auto md:origin-bottom md:mb-[-2rem] md:scale-[2.61] md:translate-y-[75%] md:translate-x-[-15%]"
+              className="relative z-20 w-[130%] md:w-[100%] max-w-none mx-auto h-auto object-contain origin-bottom scale-135 md:scale-100 -translate-y-4 md:-translate-y-0 xl:w-full xl:max-w-[1200px] xl:mx-auto xl:origin-bottom xl:mb-[-2rem] xl:scale-[2.61] xl:translate-y-[75%] xl:translate-x-[-15%]"
               style={{ 
                 filter: 'contrast(1.05) brightness(1.02)',
               }}
@@ -96,12 +96,12 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
 
     </div>
 
-    {/* Coalition Logo Overlay - Positioned: Mobile (Bottom Right next to photo), Desktop (Top Right) */}
+    {/* Coalition Logo Overlay - Positioned: Mobile/Tablet (Bottom Right next to photo), Desktop (Top Right) */}
     <img 
       src="https://res.cloudinary.com/dkw8sr9rj/image/upload/v1766335478/Casilla_yqvdo4.png" 
       alt="Coalición Agenda Ciudadana"
       loading="eager"
-      className="absolute z-30 bottom-8 right-2 w-36 bg-white/95 p-1 rounded-lg md:shadow-none md:bg-transparent md:p-0 md:w-[24rem] md:top-4 md:right-8 md:bottom-auto"
+      className="absolute z-30 bottom-8 right-2 w-36 md:w-72 lg:w-80 bg-white/95 p-1 rounded-lg xl:shadow-none xl:bg-transparent xl:p-0 xl:w-[24rem] xl:top-4 xl:right-8 xl:bottom-auto"
     />
   </div>
 );
