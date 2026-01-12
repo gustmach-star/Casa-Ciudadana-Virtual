@@ -72,6 +72,9 @@ const TransportPage: React.FC = () => {
         <div className="p-4 text-white text-center text-sm font-bold uppercase tracking-wide" style={{ backgroundColor: COLORS.green }}>
           Solo para el domingo 1° de febrero de 2026
         </div>
+        <div className="px-4 py-2 bg-yellow-50 text-center text-xs text-gray-600 border-b border-yellow-200">
+          <span className="font-medium">Nota:</span> Disponible sólo en el territorio nacional. No aplica para voto en el extranjero.
+        </div>
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           <div>
              <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Nombre del solicitante</label>
