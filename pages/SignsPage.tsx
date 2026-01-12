@@ -90,7 +90,7 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
         </div>
       )}
 
-      <div className="flex justify-between items-end mb-8 border-b pb-4">
+      <div className="flex justify-between items-end mb-4 border-b pb-4">
         <div>
           <h2 className="text-3xl font-bold text-gray-800">Signos Externos</h2>
           <p className="text-gray-600 mt-1">Identificáte con la Coalición. Solicitá tu material oficial y <span className="font-bold">GRATUITO</span> aquí.</p>
@@ -209,6 +209,10 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
             )}
           </div>
         )}
+      </div>
+
+      <div className="mb-6 px-4 py-2 bg-yellow-50 text-center text-xs text-gray-600 rounded-lg border border-yellow-200">
+        <span className="font-medium">Nota:</span> El material está sujeto a disponibilidad del producto al momento de hacer el pedido.
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
