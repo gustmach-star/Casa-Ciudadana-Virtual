@@ -170,7 +170,7 @@ export const Proposals: React.FC = () => {
          </p>
          
          <a 
-           href="https://claudiadobles.com/"
+           href="https://scan.page/p/1T6Vtd"
            target="_blank"
            rel="noopener noreferrer" 
            className="inline-flex items-center justify-center px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all uppercase tracking-wide group"
