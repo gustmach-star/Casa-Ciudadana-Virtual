@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, isMobileMenuOp
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6 items-center">
+          <div className="hidden lg:flex space-x-6 items-center">
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, isMobileMenuOp
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white focus:outline-none">
               {isMobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
             </button>
@@ -85,7 +85,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, isMobileMenuOp
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-white/20 pb-4 pt-5" style={{ backgroundColor: COLORS.red }}>
+        <div className="lg:hidden border-t border-white/20 pb-4 pt-5" style={{ backgroundColor: COLORS.red }}>
           {navItems.map((item) => (
             <button
               key={item.id}
