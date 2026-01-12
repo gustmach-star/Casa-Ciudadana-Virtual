@@ -19,12 +19,12 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, isMobileMenuOp
   const LogoSrc = "https://res.cloudinary.com/dkw8sr9rj/image/upload/v1763833479/Logo_C_Trans_sqpmj9.png";
 
   const navItems = [
-    { id: 'home', label: 'Inicio', icon: <Vote size={22} /> },
-    { id: 'ai', label: 'Coali IA', icon: <Sparkles size={22} className="text-yellow-300" /> },
-    { id: 'donde-votar', label: '¿Dónde Voto?', icon: <Search size={22} /> },
-    { id: 'transporte', label: 'Te llevamos', icon: <Bus size={22} /> },
-    { id: 'signos', label: 'Propaganda', icon: <Flag size={22} /> },
-    { id: 'voluntariado', label: 'Sumáte', icon: <Users size={22} /> },
+    { id: 'home', label: 'Inicio', icon: <Vote size={18} /> },
+    { id: 'ai', label: 'Coali IA', icon: <Sparkles size={18} className="text-yellow-300" /> },
+    { id: 'donde-votar', label: '¿Dónde Voto?', icon: <Search size={18} /> },
+    { id: 'transporte', label: 'Te llevamos', icon: <Bus size={18} /> },
+    { id: 'signos', label: 'Propaganda', icon: <Flag size={18} /> },
+    { id: 'voluntariado', label: 'Sumáte', icon: <Users size={18} /> },
   ];
 
   return (
