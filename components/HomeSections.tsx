@@ -50,7 +50,7 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
             style={{ backgroundColor: COLORS.red, borderColor: COLORS.yellow }}
           >
             <Heart className="mr-1" size={18} />
-            Ayudar
+            Donar
           </button>
           <button 
             onClick={() => setActiveTab('donde-votar')}
