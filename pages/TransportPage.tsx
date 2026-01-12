@@ -70,7 +70,7 @@ const TransportPage: React.FC = () => {
 
       <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
         <div className="p-4 text-white text-center text-sm font-bold uppercase tracking-wide" style={{ backgroundColor: COLORS.green }}>
-          Solo para el domingo 1 de febrero de 2026
+          Solo para el domingo 1° de febrero de 2026
         </div>
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           <div>
