@@ -166,7 +166,7 @@ export const Proposals: React.FC = () => {
          </div>
          <h2 className="text-3xl font-bold text-gray-800 mb-4 font-heading">Nuestras Propuestas</h2>
          <p className="text-lg text-gray-600 mb-8 font-body max-w-2xl mx-auto leading-relaxed">
-           Tenemos una visión clara para el futuro de Costa Rica. Conocé en detalle nuestros ejes programáticos y el plan de gobierno completo en nuestro sitio oficial.
+           Tenemos una visión clara para el futuro de Costa Rica. Conocé en detalle nuestros ejes programáticos y descargá el plan de gobierno completo aquí.
          </p>
          
          <a 
@@ -176,7 +176,7 @@ export const Proposals: React.FC = () => {
            className="inline-flex items-center justify-center px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all uppercase tracking-wide group"
            style={{ backgroundColor: COLORS.green }}
          >
-           Ver Plan de Gobierno
+           DESCARGÁ NUESTRO PLAN DE GOBIERNO
            <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" size={24} />
          </a>
        </div>
