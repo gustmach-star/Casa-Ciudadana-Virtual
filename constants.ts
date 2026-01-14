@@ -15,7 +15,7 @@ export const MERCH_ITEMS = [
   { id: 5, name: "Lonas", type: "Lona", stock: "Disponible", image: "https://res.cloudinary.com/dkw8sr9rj/image/upload/v1767820769/Lona_osxcgj.jpg" },
   { id: 6, name: "Bandana", type: "Mascotas", stock: "Agotado", image: "https://res.cloudinary.com/dkw8sr9rj/image/upload/v1767821013/Bandana_Perrito_ybspc9.png" },
   { id: 7, name: "Gorras", type: "Ropa", stock: "Agotado", image: "https://res.cloudinary.com/dkw8sr9rj/image/upload/v1767821290/GorraBlanca-IconoCoalicion_id1np5.jpg" },
-  { id: 8, name: "Totebag", type: "Accesorio", stock: "Disponible", image: "https://res.cloudinary.com/dkw8sr9rj/image/upload/v1767821268/ToteBag-Coalicion_hau3u4.jpg" },
+  { id: 8, name: "Totebag", type: "Accesorio", stock: "Agotado", image: "https://res.cloudinary.com/dkw8sr9rj/image/upload/v1767821268/ToteBag-Coalicion_hau3u4.jpg" },
   { id: 4, name: "Calcomanías", type: "Accesorio", stock: "Disponible", image: "https://res.cloudinary.com/dkw8sr9rj/image/upload/v1765829683/Calcomani%CC%81as_nfdafo.jpg" },
   { id: 2, name: "Volantes", type: "Papelería", stock: "Disponible", image: "https://res.cloudinary.com/dkw8sr9rj/image/upload/v1765829140/volante_jqyqkv.jpg" },
 ];
