@@ -7,6 +7,7 @@ const VolunteerPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     full_name: '',
+    email: '',
     phone: '',
     location: '',
     roles: [] as string[]
@@ -55,7 +56,7 @@ const VolunteerPage: React.FC = () => {
         </div>
         <h2 className="text-2xl font-bold text-gray-800 mb-2">¡Gracias por sumarte!</h2>
         <p className="text-gray-600">Tus datos han sido registrados. Un coordinador territorial te contactará por WhatsApp pronto.</p>
-        <button onClick={() => { setSubmitted(false); setFormData({ full_name: '', phone: '', location: '', roles: [] }); }} className="mt-8 font-bold uppercase text-sm" style={{ color: COLORS.green }}>Volver al formulario</button>
+        <button onClick={() => { setSubmitted(false); setFormData({ full_name: '', email: '', phone: '', location: '', roles: [] }); }} className="mt-8 font-bold uppercase text-sm" style={{ color: COLORS.green }}>Volver al formulario</button>
       </div>
     );
   }
@@ -86,6 +87,23 @@ const VolunteerPage: React.FC = () => {
             />
           </div>
           <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Correo Electrónico</label>
+            <input 
+              type="email" 
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              placeholder="tu@correo.com"
+              aria-label="Correo electrónico"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none" 
+              style={{ '--tw-ring-color': COLORS.red } as React.CSSProperties} 
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
             <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Teléfono / WhatsApp</label>
             <input 
               type="tel" 
@@ -98,19 +116,18 @@ const VolunteerPage: React.FC = () => {
               style={{ '--tw-ring-color': COLORS.red } as React.CSSProperties} 
             />
           </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Cantón / Distrito</label>
-          <input 
-            type="text" 
-            name="location"
-            value={formData.location}
-            onChange={handleInputChange}
-            required 
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none" 
-            style={{ '--tw-ring-color': COLORS.red } as React.CSSProperties} 
-          />
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Cantón / Distrito</label>
+            <input 
+              type="text" 
+              name="location"
+              value={formData.location}
+              onChange={handleInputChange}
+              required 
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none" 
+              style={{ '--tw-ring-color': COLORS.red } as React.CSSProperties} 
+            />
+          </div>
         </div>
 
         <div>

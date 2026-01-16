@@ -6,6 +6,7 @@ import { appendToSheet, formatTransportData, SHEETS } from '../services/googleSh
 const TransportPage: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
     phone: '',
     pickup_location: '',
     preferred_time: '6:00 AM',
@@ -86,6 +87,21 @@ const TransportPage: React.FC = () => {
                required
                placeholder="Tu nombre completo"
                aria-label="Nombre del solicitante"
+               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none" 
+               style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties} 
+             />
+          </div>
+
+          <div>
+             <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Correo Electrónico</label>
+             <input 
+               type="email" 
+               name="email"
+               value={formData.email}
+               onChange={handleInputChange}
+               required
+               placeholder="tu@correo.com"
+               aria-label="Correo electrónico"
                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 outline-none" 
                style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties} 
              />

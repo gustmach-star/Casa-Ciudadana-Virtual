@@ -42,9 +42,9 @@ export async function appendToSheet(
 
 /**
  * Formatea datos del carrito de signos para Google Sheets
- * Formato esperado: Fecha/Hora | Nombre | Cédula | Teléfono | Provincia | Cantón | Productos | Total Items
+ * Formato esperado: Fecha/Hora | Nombre | Email | Cédula | Teléfono | Provincia | Cantón | Productos | Total Items
  */
-export function formatSignsData(cart: Record<string, number>, merchItems: any[], customerName: string, customerId: string, customerPhone: string, customerProvince: string, customerCanton: string): any[] {
+export function formatSignsData(cart: Record<string, number>, merchItems: any[], customerName: string, customerEmail: string, customerId: string, customerPhone: string, customerProvince: string, customerCanton: string): any[] {
   const timestamp = new Date().toLocaleString('es-CR', { 
     timeZone: 'America/Costa_Rica',
     year: 'numeric',
@@ -67,15 +67,16 @@ export function formatSignsData(cart: Record<string, number>, merchItems: any[],
 
   const totalItems = Object.values(cart).reduce((a: number, b: number) => a + b, 0);
 
-  return [timestamp, customerName, customerId, customerPhone, customerProvince, customerCanton, productos, totalItems];
+  return [timestamp, customerName, customerEmail, customerId, customerPhone, customerProvince, customerCanton, productos, totalItems];
 }
 
 /**
  * Formatea datos de transporte para Google Sheets
- * Formato esperado: Fecha/Hora | Nombre | Teléfono | Ubicación | Hora Preferida | Pasajeros | Necesita Rampa
+ * Formato esperado: Fecha/Hora | Nombre | Email | Teléfono | Ubicación | Hora Preferida | Pasajeros | Necesita Rampa
  */
 export function formatTransportData(formData: {
   name: string;
+  email: string;
   phone: string;
   pickup_location: string;
   preferred_time: string;
@@ -95,6 +96,7 @@ export function formatTransportData(formData: {
   return [
     timestamp,
     formData.name,
+    formData.email,
     formData.phone,
     formData.pickup_location,
     formData.preferred_time,
@@ -105,10 +107,11 @@ export function formatTransportData(formData: {
 
 /**
  * Formatea datos de voluntariado para Google Sheets
- * Formato esperado: Fecha/Hora | Nombre | Teléfono | Cantón/Distrito | Roles
+ * Formato esperado: Fecha/Hora | Nombre | Email | Teléfono | Cantón/Distrito | Roles
  */
 export function formatVolunteerData(formData: {
   full_name: string;
+  email: string;
   phone: string;
   location: string;
   roles: string[];
@@ -128,6 +131,7 @@ export function formatVolunteerData(formData: {
   return [
     timestamp,
     formData.full_name,
+    formData.email,
     formData.phone,
     formData.location,
     roles

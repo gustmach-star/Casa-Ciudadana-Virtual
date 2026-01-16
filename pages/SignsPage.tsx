@@ -18,6 +18,7 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
   const [lonaSize, setLonaSize] = useState<string>('1x1');
   const [capColor, setCapColor] = useState<string>('Blanco');
   const [customerName, setCustomerName] = useState<string>('');
+  const [customerEmail, setCustomerEmail] = useState<string>('');
   const [customerId, setCustomerId] = useState<string>('');
   const [customerPhone, setCustomerPhone] = useState<string>('');
   const [customerProvince, setCustomerProvince] = useState<string>('');
@@ -42,12 +43,12 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
         throw new Error('El carrito está vacío. Agrega items antes de guardar.');
       }
       
-      if (!customerName.trim() || !customerId.trim() || !customerPhone.trim() || !customerProvince.trim() || !customerCanton.trim()) {
-        throw new Error('Por favor completa todos los campos requeridos (nombre, cédula, teléfono, provincia y cantón).');
+      if (!customerName.trim() || !customerEmail.trim() || !customerId.trim() || !customerPhone.trim() || !customerProvince.trim() || !customerCanton.trim()) {
+        throw new Error('Por favor completa todos los campos requeridos (nombre, correo, cédula, teléfono, provincia y cantón).');
       }
 
       // Format data for Google Sheets
-      const rowData = formatSignsData(cart, MERCH_ITEMS, customerName, customerId, customerPhone, customerProvince, customerCanton);
+      const rowData = formatSignsData(cart, MERCH_ITEMS, customerName, customerEmail, customerId, customerPhone, customerProvince, customerCanton);
 
       // Append to Google Sheets via serverless API
       await appendToSheet(null, SHEETS.IDENTIFICATE, rowData);
@@ -55,6 +56,7 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
       // Clear cart and form after successful submission
       setCart({});
       setCustomerName('');
+      setCustomerEmail('');
       setCustomerId('');
       setCustomerPhone('');
       setCustomerProvince('');
@@ -134,6 +136,17 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       placeholder="Tu nombre completo"
+                      className="w-full px-2 py-1 border border-gray-300 rounded text-xs"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Correo Electrónico *</label>
+                    <input
+                      type="email"
+                      value={customerEmail}
+                      onChange={(e) => setCustomerEmail(e.target.value)}
+                      placeholder="tu@correo.com"
                       className="w-full px-2 py-1 border border-gray-300 rounded text-xs"
                       required
                     />
