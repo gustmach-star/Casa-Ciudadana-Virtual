@@ -58,7 +58,7 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
             onClick={() => setActiveTab('asistente')}
             className="bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2 border-purple-300"
           >
-            <Sparkles className="mr-2" size={22} />
+            <Sparkles className="mr-2" size={22} style={{ color: COLORS.yellow }} />
             Coali IA
           </button>
           {/* 3. Propaganda */}
