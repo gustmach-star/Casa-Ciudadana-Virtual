@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { MapPin, Users, Heart, Search, ChevronRight, Vote, CreditCard, MessageSquare, ExternalLink, Flag, Bus } from 'lucide-react';
+import { MapPin, Users, Heart, Search, ChevronRight, Vote, CreditCard, MessageSquare, ExternalLink, Flag, Bus, Sparkles } from 'lucide-react';
 import { COLORS } from '../constants';
 
 export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setActiveTab }) => (
@@ -39,6 +39,7 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
           Doná, gestioná tu voluntariado, consultá nuestras propuestas, tu centro de votación, solicitá transporte y signos externos de manera virtual.
         </p>
         <div className="grid grid-cols-2 gap-2 max-w-md mx-auto xl:mx-0">
+          {/* 1. Donar */}
           <button 
             onClick={() => {
               const donationSection = document.getElementById('donation-section');
@@ -52,14 +53,16 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
             <Heart className="mr-2" size={22} />
             Donar
           </button>
+          {/* 2. Coali IA */}
           <button 
-            onClick={() => setActiveTab('donde-votar')}
+            onClick={() => setActiveTab('asistente')}
             className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
             style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
-            <Search className="mr-2" size={22} />
-            ¿Dónde Voto?
+            <Sparkles className="mr-2" size={22} />
+            Coali IA
           </button>
+          {/* 3. Propaganda */}
           <button 
             onClick={() => setActiveTab('signos')}
             className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
@@ -68,6 +71,25 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
             <Flag className="mr-2" size={22} />
             Propaganda
           </button>
+          {/* 4. Sumáte */}
+          <button 
+            onClick={() => setActiveTab('voluntariado')}
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
+            style={{ color: COLORS.green, borderColor: COLORS.red }}
+          >
+            <Users className="mr-2" size={22} />
+            Sumáte
+          </button>
+          {/* 5. ¿Dónde Voto? */}
+          <button 
+            onClick={() => setActiveTab('donde-votar')}
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
+            style={{ color: COLORS.green, borderColor: COLORS.red }}
+          >
+            <Search className="mr-2" size={22} />
+            ¿Dónde Voto?
+          </button>
+          {/* 6. Te llevamos */}
           <button 
             onClick={() => setActiveTab('transporte')}
             className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
