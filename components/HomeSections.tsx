@@ -29,7 +29,7 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
       {/* Left Column: Content */}
       <div className="w-full xl:w-1/2 text-center xl:text-left text-white pt-24 xl:pt-0 mb-4 xl:mb-0 z-20">
         <div className="inline-block px-4 py-1 rounded-full text-xs font-bold tracking-wide mb-4 text-gray-800 shadow-lg border-2" style={{ backgroundColor: COLORS.yellow, borderColor: COLORS.red, fontFamily: 'var(--font-heading)' }}>
-          ELECCIONES 2026
+          Claudia Dobles - Presidenta
         </div>
         <h1 className="text-4xl md:text-5xl xl:text-7xl font-extrabold leading-tight mb-6 tracking-tight drop-shadow-sm">
           Tu Casa Ciudadana <br />
