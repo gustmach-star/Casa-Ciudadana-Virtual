@@ -156,7 +156,7 @@ export const CountDown: React.FC = () => {
   return (
     <div className="bg-white py-6 border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-        <span className="text-gray-600 font-bold uppercase tracking-widest text-sm mb-2 md:mb-0 font-heading">Tiempo para las elecciones (1 Feb 2026)</span>
+        <span className="text-gray-600 font-bold uppercase tracking-widest text-sm mb-2 md:mb-0 font-heading">Faltan tan sólo:</span>
         <div className="flex space-x-4 text-center">
           <div>
             <span className="text-xl md:text-2xl font-extrabold" style={{ color: COLORS.yellow }}>{timeLeft.days}</span>
