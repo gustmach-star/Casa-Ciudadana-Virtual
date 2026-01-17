@@ -173,7 +173,7 @@ export const CountDown: React.FC = () => {
             <span className="block text-xs text-gray-500 font-bold uppercase">Min</span>
           </div>
         </div>
-        <span className="text-gray-700 font-bold text-lg mt-3 font-heading">¡Y sí! Podemos Ganar</span>
+        <span className="text-gray-700 font-bold text-xl mt-3 font-heading">¡Y sí! Podemos Ganar</span>
       </div>
     </div>
   );
