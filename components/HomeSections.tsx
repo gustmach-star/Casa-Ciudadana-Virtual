@@ -191,23 +191,24 @@ const DEBATES_DATA = [
 ];
 
 export const DebatesCarousel: React.FC = () => {
-  // Triplicamos los datos para asegurar loop suave en todas las pantallas
-  const tripleData = [...DEBATES_DATA, ...DEBATES_DATA, ...DEBATES_DATA];
+  // Multiplicamos los datos 5 veces para asegurar loop suave sin cortes
+  const repeatedData = [...DEBATES_DATA, ...DEBATES_DATA, ...DEBATES_DATA, ...DEBATES_DATA, ...DEBATES_DATA];
   
   return (
     <section className="py-2 overflow-hidden" style={{ backgroundColor: COLORS.green }}>
       <style>{`
         @keyframes ticker {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-33.333%); }
+          100% { transform: translateX(-20%); }
         }
         .ticker-wrap {
           display: flex;
-          animation: ticker 12s linear infinite;
+          width: max-content;
+          animation: ticker 6s linear infinite;
         }
         @media (min-width: 768px) {
           .ticker-wrap {
-            animation: ticker 20s linear infinite;
+            animation: ticker 18s linear infinite;
           }
         }
         .ticker-wrap:hover {
@@ -216,23 +217,23 @@ export const DebatesCarousel: React.FC = () => {
       `}</style>
       
       <div className="flex items-center">
-        <div className="flex-shrink-0 px-4 py-1 font-bold text-xs uppercase tracking-wider flex items-center gap-2" style={{ backgroundColor: COLORS.yellow, color: COLORS.red }}>
+        <div className="flex-shrink-0 px-4 py-1 font-bold text-xs uppercase tracking-wider flex items-center gap-2 z-10" style={{ backgroundColor: COLORS.yellow, color: COLORS.red }}>
           <Tv size={14} />
           Debates
         </div>
         
         <div className="flex-1 overflow-hidden">
           <div className="ticker-wrap">
-            {/* Triplicamos el contenido para el loop infinito suave */}
-            {tripleData.map((debate, index) => (
+            {/* Repetimos el contenido 5 veces para loop infinito suave */}
+            {repeatedData.map((debate, index) => (
               <div 
                 key={`${debate.id}-${index}`}
-                className="flex-shrink-0 flex items-center px-6 text-white text-sm whitespace-nowrap"
+                className="flex-shrink-0 flex items-center px-4 md:px-6 text-white text-xs md:text-sm whitespace-nowrap"
               >
-                <span className="font-bold mr-2" style={{ color: COLORS.yellow }}>{debate.date}</span>
-                <span className="mr-2">•</span>
-                <span className="font-semibold mr-2">{debate.organizer}</span>
-                <span className="text-white/70 mr-2">({debate.location})</span>
+                <span className="font-bold mr-1 md:mr-2" style={{ color: COLORS.yellow }}>{debate.date}</span>
+                <span className="mr-1 md:mr-2">•</span>
+                <span className="font-semibold mr-1 md:mr-2">{debate.organizer}</span>
+                <span className="text-white/70 mr-1 md:mr-2">({debate.location})</span>
                 <span className="font-bold" style={{ color: COLORS.yellow }}>{debate.time}</span>
               </div>
             ))}
