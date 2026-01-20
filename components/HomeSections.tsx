@@ -191,20 +191,23 @@ const DEBATES_DATA = [
 ];
 
 export const DebatesCarousel: React.FC = () => {
+  // Triplicamos los datos para asegurar loop suave en todas las pantallas
+  const tripleData = [...DEBATES_DATA, ...DEBATES_DATA, ...DEBATES_DATA];
+  
   return (
     <section className="py-2 overflow-hidden" style={{ backgroundColor: COLORS.green }}>
       <style>{`
         @keyframes ticker {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-33.333%); }
         }
         .ticker-wrap {
           display: flex;
-          animation: ticker 8s linear infinite;
+          animation: ticker 12s linear infinite;
         }
         @media (min-width: 768px) {
           .ticker-wrap {
-            animation: ticker 15s linear infinite;
+            animation: ticker 20s linear infinite;
           }
         }
         .ticker-wrap:hover {
@@ -220,8 +223,8 @@ export const DebatesCarousel: React.FC = () => {
         
         <div className="flex-1 overflow-hidden">
           <div className="ticker-wrap">
-            {/* Duplicamos el contenido para el loop infinito */}
-            {[...DEBATES_DATA, ...DEBATES_DATA].map((debate, index) => (
+            {/* Triplicamos el contenido para el loop infinito suave */}
+            {tripleData.map((debate, index) => (
               <div 
                 key={`${debate.id}-${index}`}
                 className="flex-shrink-0 flex items-center px-6 text-white text-sm whitespace-nowrap"
