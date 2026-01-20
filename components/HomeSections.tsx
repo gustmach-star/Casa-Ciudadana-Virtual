@@ -200,7 +200,12 @@ export const DebatesCarousel: React.FC = () => {
         }
         .ticker-wrap {
           display: flex;
-          animation: ticker 15s linear infinite;
+          animation: ticker 8s linear infinite;
+        }
+        @media (min-width: 768px) {
+          .ticker-wrap {
+            animation: ticker 15s linear infinite;
+          }
         }
         .ticker-wrap:hover {
           animation-play-state: paused;
