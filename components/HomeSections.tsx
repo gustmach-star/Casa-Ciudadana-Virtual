@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { MapPin, Users, Heart, Search, ChevronRight, Vote, CreditCard, MessageSquare, ExternalLink, Flag, Bus, Sparkles } from 'lucide-react';
+import { MapPin, Users, Heart, Search, ChevronRight, ChevronLeft, Vote, CreditCard, MessageSquare, ExternalLink, Flag, Bus, Sparkles, Calendar, Clock, Tv } from 'lucide-react';
 import { COLORS } from '../constants';
 
 export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setActiveTab }) => (
@@ -176,6 +176,130 @@ export const CountDown: React.FC = () => {
         <span className="text-gray-700 font-bold text-xl mt-3 font-heading">¡Y sí! Podemos Ganar</span>
       </div>
     </div>
+  );
+};
+
+// Datos de los debates
+const DEBATES_DATA = [
+  { id: 1, date: 'Martes 21 de enero', organizer: 'Grupo Extra', location: 'Museo de los Niños', time: '7:00 PM' },
+  { id: 2, date: 'Miércoles 22 de enero', organizer: 'Sepamos ser Libres', location: 'El "Antidebate"', time: '8:00 PM' },
+  { id: 3, date: 'Jueves 23 de enero', organizer: 'Multimedios', location: 'Colegio de Ciencias Económicas', time: '7:00 PM' },
+  { id: 4, date: 'Lunes 27 de enero', organizer: 'Radio Columbia', location: 'U Latina, San Pedro', time: '6:00 PM' },
+  { id: 5, date: 'Martes 28 de enero', organizer: 'Repretel-Monumental', location: 'Repretel, La Uruca', time: '7:30 PM' },
+  { id: 6, date: 'Miércoles 29 de enero', organizer: 'No Pasa Nada', location: 'Por definir', time: '6:30 PM' },
+  { id: 7, date: 'Jueves 30 de enero', organizer: 'Teletica', location: 'Teletica, Sabana Oeste', time: '7:30 PM' },
+];
+
+export const DebatesCarousel: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Auto-scroll cada 4 segundos
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % DEBATES_DATA.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [isAutoPlaying]);
+
+  const goToPrev = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev - 1 + DEBATES_DATA.length) % DEBATES_DATA.length);
+  };
+
+  const goToNext = () => {
+    setIsAutoPlaying(false);
+    setCurrentIndex((prev) => (prev + 1) % DEBATES_DATA.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setIsAutoPlaying(false);
+    setCurrentIndex(index);
+  };
+
+  return (
+    <section className="py-8 bg-gradient-to-r from-gray-900 to-gray-800">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center justify-center p-2 rounded-full mb-3" style={{ backgroundColor: COLORS.yellow }}>
+            <Tv size={24} style={{ color: COLORS.red }} />
+          </div>
+          <h2 className="text-2xl font-bold text-white font-heading">Próximos Debates Presidenciales</h2>
+          <p className="text-gray-400 text-sm mt-1">¡No te los pierdas!</p>
+        </div>
+
+        <div className="relative">
+          {/* Carousel Container */}
+          <div className="overflow-hidden rounded-xl">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {DEBATES_DATA.map((debate) => (
+                <div 
+                  key={debate.id}
+                  className="min-w-full px-2"
+                >
+                  <div className="bg-white rounded-xl p-6 shadow-lg border-l-4" style={{ borderLeftColor: COLORS.green }}>
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Calendar size={18} style={{ color: COLORS.red }} />
+                          <span className="font-bold text-gray-800">{debate.date}</span>
+                        </div>
+                        <h3 className="text-xl font-bold mb-2" style={{ color: COLORS.green }}>{debate.organizer}</h3>
+                        <div className="flex items-center gap-2 text-gray-600 text-sm">
+                          <MapPin size={16} />
+                          <span>{debate.location}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg">
+                        <Clock size={20} style={{ color: COLORS.red }} />
+                        <span className="text-2xl font-bold" style={{ color: COLORS.green }}>{debate.time}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation Arrows */}
+          <button 
+            onClick={goToPrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors z-10"
+            aria-label="Anterior"
+          >
+            <ChevronLeft size={24} style={{ color: COLORS.green }} />
+          </button>
+          <button 
+            onClick={goToNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors z-10"
+            aria-label="Siguiente"
+          >
+            <ChevronRight size={24} style={{ color: COLORS.green }} />
+          </button>
+        </div>
+
+        {/* Dots Indicator */}
+        <div className="flex justify-center gap-2 mt-4">
+          {DEBATES_DATA.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index === currentIndex 
+                  ? 'w-6' 
+                  : 'bg-gray-600 hover:bg-gray-500'
+              }`}
+              style={index === currentIndex ? { backgroundColor: COLORS.yellow } : {}}
+              aria-label={`Ir al debate ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
