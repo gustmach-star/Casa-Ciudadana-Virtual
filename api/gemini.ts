@@ -1,8 +1,13 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { google } from 'googleapis';
 
+// Cache del cliente de autenticación
+let authClient: any = null;
+
 // Configurar autenticación con Service Account para logging
 const getAuthClient = () => {
+  if (authClient) return authClient;
+  
   const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   let privateKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY || '';
   
@@ -10,20 +15,27 @@ const getAuthClient = () => {
     privateKey = privateKey.replace(/\\n/g, '\n');
   }
 
-  return new google.auth.GoogleAuth({
+  authClient = new google.auth.GoogleAuth({
     credentials: {
       client_email: email,
       private_key: privateKey,
     },
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
+  
+  return authClient;
 };
 
-// Función para loggear consulta a Google Sheets (no bloquea la respuesta)
+// Función para loggear consulta a Google Sheets
 async function logQueryToSheets(query: string): Promise<void> {
   try {
     const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID;
-    if (!spreadsheetId) return;
+    const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+    
+    if (!spreadsheetId || !email) {
+      console.log('Logging skipped: missing env vars');
+      return;
+    }
 
     const timestamp = new Date().toLocaleString('es-CR', { 
       timeZone: 'America/Costa_Rica',
@@ -38,7 +50,7 @@ async function logQueryToSheets(query: string): Promise<void> {
     const auth = getAuthClient();
     const sheets = google.sheets({ version: 'v4', auth });
 
-    await sheets.spreadsheets.values.append({
+    const result = await sheets.spreadsheets.values.append({
       spreadsheetId,
       range: 'Coali!A:B',
       valueInputOption: 'USER_ENTERED',
@@ -46,9 +58,11 @@ async function logQueryToSheets(query: string): Promise<void> {
         values: [[timestamp, query.slice(0, 500)]],
       },
     });
-  } catch (error) {
-    // Log silencioso - no debe afectar la respuesta al usuario
-    console.error('Error logging query to sheets:', error);
+    
+    console.log('Query logged successfully:', result.status);
+  } catch (error: any) {
+    // Log el error pero no afecta la respuesta al usuario
+    console.error('Error logging query to sheets:', error?.message || error);
   }
 }
 
@@ -203,8 +217,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const data = await response.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No pude generar una respuesta.';
 
-    // Log async a Google Sheets (no espera, no bloquea)
-    logQueryToSheets(sanitizedPrompt).catch(() => {});
+    // Log a Google Sheets - espera para asegurar que se registre
+    try {
+      await logQueryToSheets(sanitizedPrompt);
+    } catch (logError) {
+      console.error('Failed to log query:', logError);
+    }
 
     return res.status(200).json({ success: true, text });
   } catch (error: any) {
