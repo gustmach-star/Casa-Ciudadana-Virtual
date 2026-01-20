@@ -204,11 +204,11 @@ export const DebatesCarousel: React.FC = () => {
         .ticker-wrap {
           display: flex;
           width: max-content;
-          animation: ticker 20s linear infinite;
+          animation: ticker 25s linear infinite;
         }
         @media (min-width: 768px) {
           .ticker-wrap {
-            animation: ticker 26s linear infinite;
+            animation: ticker 30s linear infinite;
           }
         }
         .ticker-wrap:hover {
