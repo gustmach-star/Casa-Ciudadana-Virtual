@@ -181,122 +181,54 @@ export const CountDown: React.FC = () => {
 
 // Datos de los debates
 const DEBATES_DATA = [
-  { id: 1, date: 'Martes 21 de enero', organizer: 'Grupo Extra', location: 'Museo de los Niños', time: '7:00 PM' },
-  { id: 2, date: 'Miércoles 22 de enero', organizer: 'Sepamos ser Libres', location: 'El "Antidebate"', time: '8:00 PM' },
-  { id: 3, date: 'Jueves 23 de enero', organizer: 'Multimedios', location: 'Colegio de Ciencias Económicas', time: '7:00 PM' },
-  { id: 4, date: 'Lunes 27 de enero', organizer: 'Radio Columbia', location: 'U Latina, San Pedro', time: '6:00 PM' },
-  { id: 5, date: 'Martes 28 de enero', organizer: 'Repretel-Monumental', location: 'Repretel, La Uruca', time: '7:30 PM' },
-  { id: 6, date: 'Miércoles 29 de enero', organizer: 'No Pasa Nada', location: 'Por definir', time: '6:30 PM' },
-  { id: 7, date: 'Jueves 30 de enero', organizer: 'Teletica', location: 'Teletica, Sabana Oeste', time: '7:30 PM' },
+  { id: 1, date: 'Mar 21', organizer: 'Grupo Extra', location: 'Museo de los Niños', time: '7PM' },
+  { id: 2, date: 'Mié 22', organizer: 'Sepamos ser Libres', location: 'Antidebate', time: '8PM' },
+  { id: 3, date: 'Jue 23', organizer: 'Multimedios', location: 'Col. Ciencias Económicas', time: '7PM' },
+  { id: 4, date: 'Lun 27', organizer: 'Radio Columbia', location: 'U Latina', time: '6PM' },
+  { id: 5, date: 'Mar 28', organizer: 'Repretel-Monumental', location: 'La Uruca', time: '7:30PM' },
+  { id: 6, date: 'Mié 29', organizer: 'No Pasa Nada', location: 'Por definir', time: '6:30PM' },
+  { id: 7, date: 'Jue 30', organizer: 'Teletica', location: 'Sabana Oeste', time: '7:30PM' },
 ];
 
 export const DebatesCarousel: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
-  // Auto-scroll cada 4 segundos
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % DEBATES_DATA.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [isAutoPlaying]);
-
-  const goToPrev = () => {
-    setIsAutoPlaying(false);
-    setCurrentIndex((prev) => (prev - 1 + DEBATES_DATA.length) % DEBATES_DATA.length);
-  };
-
-  const goToNext = () => {
-    setIsAutoPlaying(false);
-    setCurrentIndex((prev) => (prev + 1) % DEBATES_DATA.length);
-  };
-
-  const goToSlide = (index: number) => {
-    setIsAutoPlaying(false);
-    setCurrentIndex(index);
-  };
-
   return (
-    <section className="py-8 bg-gradient-to-r from-gray-900 to-gray-800">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center p-2 rounded-full mb-3" style={{ backgroundColor: COLORS.yellow }}>
-            <Tv size={24} style={{ color: COLORS.red }} />
-          </div>
-          <h2 className="text-2xl font-bold text-white font-heading">Próximos Debates Presidenciales</h2>
-          <p className="text-gray-400 text-sm mt-1">¡No te los pierdas!</p>
+    <section className="py-2 overflow-hidden" style={{ backgroundColor: COLORS.green }}>
+      <style>{`
+        @keyframes ticker {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .ticker-wrap {
+          display: flex;
+          animation: ticker 30s linear infinite;
+        }
+        .ticker-wrap:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+      
+      <div className="flex items-center">
+        <div className="flex-shrink-0 px-4 py-1 font-bold text-xs uppercase tracking-wider flex items-center gap-2" style={{ backgroundColor: COLORS.yellow, color: COLORS.red }}>
+          <Tv size={14} />
+          Debates
         </div>
-
-        <div className="relative">
-          {/* Carousel Container */}
-          <div className="overflow-hidden rounded-xl">
-            <div 
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {DEBATES_DATA.map((debate) => (
-                <div 
-                  key={debate.id}
-                  className="min-w-full px-2"
-                >
-                  <div className="bg-white rounded-xl p-6 shadow-lg border-l-4" style={{ borderLeftColor: COLORS.green }}>
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Calendar size={18} style={{ color: COLORS.red }} />
-                          <span className="font-bold text-gray-800">{debate.date}</span>
-                        </div>
-                        <h3 className="text-xl font-bold mb-2" style={{ color: COLORS.green }}>{debate.organizer}</h3>
-                        <div className="flex items-center gap-2 text-gray-600 text-sm">
-                          <MapPin size={16} />
-                          <span>{debate.location}</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg">
-                        <Clock size={20} style={{ color: COLORS.red }} />
-                        <span className="text-2xl font-bold" style={{ color: COLORS.green }}>{debate.time}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        
+        <div className="flex-1 overflow-hidden">
+          <div className="ticker-wrap">
+            {/* Duplicamos el contenido para el loop infinito */}
+            {[...DEBATES_DATA, ...DEBATES_DATA].map((debate, index) => (
+              <div 
+                key={`${debate.id}-${index}`}
+                className="flex-shrink-0 flex items-center px-6 text-white text-sm whitespace-nowrap"
+              >
+                <span className="font-bold mr-2" style={{ color: COLORS.yellow }}>{debate.date}</span>
+                <span className="mr-2">•</span>
+                <span className="font-semibold mr-2">{debate.organizer}</span>
+                <span className="text-white/70 mr-2">({debate.location})</span>
+                <span className="font-bold" style={{ color: COLORS.yellow }}>{debate.time}</span>
+              </div>
+            ))}
           </div>
-
-          {/* Navigation Arrows */}
-          <button 
-            onClick={goToPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors z-10"
-            aria-label="Anterior"
-          >
-            <ChevronLeft size={24} style={{ color: COLORS.green }} />
-          </button>
-          <button 
-            onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition-colors z-10"
-            aria-label="Siguiente"
-          >
-            <ChevronRight size={24} style={{ color: COLORS.green }} />
-          </button>
-        </div>
-
-        {/* Dots Indicator */}
-        <div className="flex justify-center gap-2 mt-4">
-          {DEBATES_DATA.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'w-6' 
-                  : 'bg-gray-600 hover:bg-gray-500'
-              }`}
-              style={index === currentIndex ? { backgroundColor: COLORS.yellow } : {}}
-              aria-label={`Ir al debate ${index + 1}`}
-            />
-          ))}
         </div>
       </div>
     </section>
