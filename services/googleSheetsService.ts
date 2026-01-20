@@ -7,7 +7,8 @@ const SPREADSHEET_ID = '19CeLOvIVzwUiGR6XYi41Y-jjpdJt5u--fs0mwZfIiPQ';
 const SHEETS = {
   IDENTIFICATE: 'Identificate',
   TRANSPORTE: 'Transporte',
-  SUMARME: 'Sumarme'
+  SUMARME: 'Sumarme',
+  COALI: 'Coali'
 };
 
 /**

@@ -57,6 +57,7 @@ const SHEETS = {
   IDENTIFICATE: 'Identificate',
   TRANSPORTE: 'Transporte',
   SUMARME: 'Sumarme',
+  COALI: 'Coali',
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

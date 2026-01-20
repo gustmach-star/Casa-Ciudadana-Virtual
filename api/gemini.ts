@@ -1,4 +1,56 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { google } from 'googleapis';
+
+// Configurar autenticación con Service Account para logging
+const getAuthClient = () => {
+  const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+  let privateKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY || '';
+  
+  if (privateKey.includes('\\n')) {
+    privateKey = privateKey.replace(/\\n/g, '\n');
+  }
+
+  return new google.auth.GoogleAuth({
+    credentials: {
+      client_email: email,
+      private_key: privateKey,
+    },
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+};
+
+// Función para loggear consulta a Google Sheets (no bloquea la respuesta)
+async function logQueryToSheets(query: string): Promise<void> {
+  try {
+    const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID;
+    if (!spreadsheetId) return;
+
+    const timestamp = new Date().toLocaleString('es-CR', { 
+      timeZone: 'America/Costa_Rica',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+
+    const auth = getAuthClient();
+    const sheets = google.sheets({ version: 'v4', auth });
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: 'Coali!A:B',
+      valueInputOption: 'USER_ENTERED',
+      requestBody: {
+        values: [[timestamp, query.slice(0, 500)]],
+      },
+    });
+  } catch (error) {
+    // Log silencioso - no debe afectar la respuesta al usuario
+    console.error('Error logging query to sheets:', error);
+  }
+}
 
 // Dominios permitidos
 const ALLOWED_ORIGINS = [
@@ -150,6 +202,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const data = await response.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No pude generar una respuesta.';
+
+    // Log async a Google Sheets (no espera, no bloquea)
+    logQueryToSheets(sanitizedPrompt).catch(() => {});
 
     return res.status(200).json({ success: true, text });
   } catch (error: any) {
