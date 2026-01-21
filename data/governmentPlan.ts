@@ -432,4 +432,27 @@ CAPÍTULO 6: POLÍTICA EXTERIOR
 628. Servicio Exterior: Profesionalización.
 631. Academia Diplomática.
 634. Cooperación: Diversificar (Sur-Sur).
+
+CANDIDATOS Y CANDIDATAS A DIPUTACIONES POR PROVINCIA - COALICIÓN AGENDA CIUDADANA
+
+SAN JOSÉ:
+Claudia Dobles Camargo, Alexander Solís Delgado, Rebeca Linox Chacón, Fabián Solano Fernández, Nury Solís Mata, Jorge Roldán Villalobos.
+
+ALAJUELA:
+Sergio Alfaro Salas, Alejandra Portillo Gómez, Rodolfo Cordero Vargas, Rita Méndez Villalobos, Juan Carlos Quirós Vargas, Ana Lorena López Castillo.
+
+CARTAGO:
+Joselyne Sánchez Soto, Álvaro Ureña Padilla, Andrea Jiménez Mata, Josué Hernández Navarro, Flor María Calderón González, Fabián Marerro Soto.
+
+HEREDIA:
+Boris Ramírez Vega, Margareth Solano Sánchez, Frank Mendoza Hernández, Ana Patricia Rodríguez Rodríguez, José Madrigal Hernández.
+
+GUANACASTE:
+Martín Antonio Reyes Salinas, Ana Patricia Ruiz Cambronero, Norberto Arce Murillo, Bárbara Blanco Brenes, Francisco Carazo Caballero.
+
+LIMÓN:
+Andrea Peraza Rogade, Oscar Campbell McCarthy, Xiomara Muñoz Molina, José Daniel Chavarría Álvarez, Dariana Rodríguez Iglesias.
+
+PUNTARENAS:
+Luis Alberto Villalobos Artavia, Lourdes Guevara Rodríguez, Mario Vargas Mora, Mariela Herrera González, Joséfa Ríos Martínez.
 `;
