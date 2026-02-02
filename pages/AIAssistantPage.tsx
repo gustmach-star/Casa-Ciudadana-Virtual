@@ -9,10 +9,16 @@ type Message = {
   text: string;
 };
 
+// SERVICIO DESACTIVADO TEMPORALMENTE - Para evitar cobros de Google
+const COALI_DISABLED = true;
+
 const AIAssistantPage: React.FC = () => {
   const [input, setInput] = useState('');
   const [chatHistory, setChatHistory] = useState<Message[]>([
-    { role: 'model', text: '¡Hola! Soy Coali, tu Asistente Virtual de La Coalición Agenda Ciudadana. Conozco a fondo nuestro Programa de Gobierno 2026-2030. Preguntame sobre nuestras propuestas en educación, seguridad, economía, ambiente o cualquier otro tema.' }
+    { role: 'model', text: COALI_DISABLED 
+      ? '¡Hola! Soy Coali. En este momento el servicio de consultas está temporalmente deshabilitado. ¡Gracias por tu comprensión! Para conocer nuestras propuestas, te invitamos a visitar nuestras redes sociales o descargar nuestro Programa de Gobierno.'
+      : '¡Hola! Soy Coali, tu Asistente Virtual de La Coalición Agenda Ciudadana. Conozco a fondo nuestro Programa de Gobierno 2026-2030. Preguntame sobre nuestras propuestas en educación, seguridad, economía, ambiente o cualquier otro tema.' 
+    }
   ]);
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -23,7 +29,7 @@ const AIAssistantPage: React.FC = () => {
 
   const handleChatSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || COALI_DISABLED) return;
 
     const userMsg = input;
     setInput('');
@@ -101,14 +107,14 @@ const AIAssistantPage: React.FC = () => {
               type="text" 
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Preguntá sobre nuestras propuestas..."
+              placeholder={COALI_DISABLED ? "Servicio temporalmente deshabilitado..." : "Preguntá sobre nuestras propuestas..."}
               aria-label="Escribir mensaje a Coali"
               className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
-              disabled={loading}
+              disabled={loading || COALI_DISABLED}
             />
             <button 
               type="submit" 
-              disabled={loading || !input.trim()}
+              disabled={loading || !input.trim() || COALI_DISABLED}
               className="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-full transition-colors disabled:opacity-50"
             >
               <Send size={24} />
