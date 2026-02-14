@@ -50,7 +50,7 @@ const TransportPage: React.FC = () => {
         </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-4">¡Solicitud Recibida!</h2>
         <p className="text-gray-600 mb-8">Hemos registrado tu solicitud de transporte. Te contactaremos el día antes de las elecciones para coordinar los detalles.</p>
-        <button disabled onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', pickup_location: '', preferred_time: '6:00 AM', passengers: '1', needs_ramp: false })}} className="text-indigo-600 font-bold underline disabled:opacity-50 disabled:cursor-not-allowed">
+        <button onClick={() => { setSubmitted(false); setFormData({ name: '', phone: '', pickup_location: '', preferred_time: '6:00 AM', passengers: '1', needs_ramp: false })}} className="text-indigo-600 font-bold underline">
           Solicitar otro transporte
         </button>
       </div>
@@ -135,7 +135,7 @@ const TransportPage: React.FC = () => {
                  className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-2 outline-none" 
                  style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties} 
                />
-               <button disabled type="button" className="bg-gray-100 px-4 border border-l-0 border-gray-300 rounded-r-lg hover:bg-gray-200 text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">
+               <button type="button" className="bg-gray-100 px-4 border border-l-0 border-gray-300 rounded-r-lg hover:bg-gray-200 text-gray-600">
                  <MapPin size={24} />
                </button>
              </div>
@@ -229,8 +229,8 @@ const TransportPage: React.FC = () => {
 
           <button 
             type="submit" 
-            disabled
-            className="w-full text-white font-bold py-3 rounded-lg shadow transition-colors hover:opacity-90 uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed" 
+            disabled={isSubmitting}
+            className="w-full text-white font-bold py-3 rounded-lg shadow transition-colors hover:opacity-90 uppercase tracking-wide disabled:opacity-50" 
             style={{ backgroundColor: COLORS.green }}
           >
             {isSubmitting ? 'Enviando...' : 'Agendar Transporte'}

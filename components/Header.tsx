@@ -49,10 +49,9 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, isMobileMenuOp
           <div className="hidden lg:flex space-x-6 items-center">
             {navItems.map((item) => (
               <button
-                disabled
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`nav-item flex items-center space-x-1 px-3 py-2 rounded-md transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`nav-item flex items-center space-x-1 px-3 py-2 rounded-md transition-colors whitespace-nowrap ${
                   activeTab === item.id ? 'font-bold border-b-2' : 'hover:bg-white/10 text-gray-100 font-medium'
                 }`}
                 style={activeTab === item.id ? { borderBottomColor: COLORS.yellow, fontSize: '14.5px' } : { fontSize: '14.5px' }}
@@ -63,9 +62,8 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, isMobileMenuOp
             ))}
             {/* Cart Icon */}
             <button
-              disabled
               onClick={onCartClick}
-              className="relative p-2 hover:bg-white/10 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="relative p-2 hover:bg-white/10 rounded-md transition-colors"
             >
               <ShoppingCart size={24} />
               {Object.keys(cart).length > 0 && (
@@ -78,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, isMobileMenuOp
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden">
-            <button disabled onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed">
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white focus:outline-none">
               {isMobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
             </button>
           </div>
@@ -90,13 +88,12 @@ const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, isMobileMenuOp
         <div className="lg:hidden border-t border-white/20 pb-4 pt-5" style={{ backgroundColor: COLORS.red }}>
           {navItems.map((item) => (
             <button
-              disabled
               key={item.id}
               onClick={() => {
                 setActiveTab(item.id);
                 setIsMobileMenuOpen(false);
               }}
-              className={`nav-item block w-full text-left px-4 py-3 font-medium disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`nav-item block w-full text-left px-4 py-3 font-medium ${
                 activeTab === item.id ? 'bg-black/10 border-l-4 border-yellow-400 font-bold' : 'hover:bg-black/10'
               }`}
             >

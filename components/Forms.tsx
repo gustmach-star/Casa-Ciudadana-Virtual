@@ -18,7 +18,7 @@ export const VolunteerForm: React.FC = () => {
         </div>
         <h2 className="text-2xl font-bold text-gray-800 mb-2">¡Gracias por sumarte!</h2>
         <p className="text-gray-600">Un coordinador territorial te contactará por WhatsApp pronto.</p>
-        <button disabled onClick={() => setSubmitted(false)} className="mt-8 font-bold uppercase text-sm disabled:opacity-50 disabled:cursor-not-allowed" style={{ color: COLORS.green }}>Volver al formulario</button>
+        <button onClick={() => setSubmitted(false)} className="mt-8 font-bold uppercase text-sm" style={{ color: COLORS.green }}>Volver al formulario</button>
       </div>
     );
   }
@@ -59,7 +59,7 @@ export const VolunteerForm: React.FC = () => {
           </div>
         </div>
 
-        <button disabled type="submit" className="w-full text-white font-bold py-3 rounded-lg shadow-md transition-transform transform hover:scale-[1.01] uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed" style={{ backgroundColor: COLORS.red }}>
+        <button type="submit" className="w-full text-white font-bold py-3 rounded-lg shadow-md transition-transform transform hover:scale-[1.01] uppercase tracking-wide" style={{ backgroundColor: COLORS.red }}>
           Enviar Solicitud
         </button>
       </form>
@@ -89,7 +89,7 @@ export const TransportRequest: React.FC = () => {
              <label className="block text-sm font-bold text-gray-700 mb-1 font-heading">Ubicación de recogida</label>
              <div className="flex">
                <input type="text" placeholder="Dirección exacta o link de Waze" className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-2 outline-none" style={{ '--tw-ring-color': COLORS.green } as React.CSSProperties} />
-               <button disabled className="bg-gray-100 px-4 border border-l-0 border-gray-300 rounded-r-lg hover:bg-gray-200 text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">
+               <button className="bg-gray-100 px-4 border border-l-0 border-gray-300 rounded-r-lg hover:bg-gray-200 text-gray-600">
                  <MapPin size={24} />
                </button>
              </div>
@@ -115,7 +115,7 @@ export const TransportRequest: React.FC = () => {
              </div>
           </div>
 
-          <button disabled className="w-full text-white font-bold py-3 rounded-lg shadow transition-colors hover:opacity-90 uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed" style={{ backgroundColor: COLORS.green }}>
+          <button className="w-full text-white font-bold py-3 rounded-lg shadow transition-colors hover:opacity-90 uppercase tracking-wide" style={{ backgroundColor: COLORS.green }}>
             Agendar Transporte
           </button>
         </div>

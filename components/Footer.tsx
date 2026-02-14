@@ -12,9 +12,8 @@ const Footer: React.FC = () => {
           <p className="mb-2 text-gray-400">&copy; 2026 La Casa Común. Todos los derechos reservados.</p>
           <p className="flex items-center justify-center gap-2">
             <button 
-              disabled
               onClick={() => setShowPrivacyModal(true)} 
-              className="underline cursor-pointer transition-colors font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="underline cursor-pointer transition-colors font-bold"
               style={{ color: COLORS.yellow }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'white'}
               onMouseLeave={(e) => e.currentTarget.style.color = COLORS.yellow}
@@ -23,9 +22,8 @@ const Footer: React.FC = () => {
             </button>
             <span className="text-gray-400">|</span>
             <button 
-              disabled
               onClick={() => setShowTermsModal(true)} 
-              className="underline cursor-pointer transition-colors font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="underline cursor-pointer transition-colors font-bold"
               style={{ color: COLORS.yellow }}
               onMouseEnter={(e) => e.currentTarget.style.color = 'white'}
               onMouseLeave={(e) => e.currentTarget.style.color = COLORS.yellow}
@@ -42,7 +40,7 @@ const Footer: React.FC = () => {
           <div className="bg-white rounded-lg max-w-3xl max-h-[90vh] overflow-y-auto p-8" onClick={(e) => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-gray-800">Política de Privacidad</h2>
-              <button disabled onClick={() => setShowPrivacyModal(false)} className="text-gray-500 hover:text-gray-800 text-2xl font-bold disabled:opacity-50 disabled:cursor-not-allowed">&times;</button>
+              <button onClick={() => setShowPrivacyModal(false)} className="text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
             </div>
             
             <div className="text-gray-700 space-y-4 text-sm leading-relaxed">
@@ -138,9 +136,8 @@ const Footer: React.FC = () => {
 
             <div className="mt-6 text-center">
               <button 
-                disabled
                 onClick={() => setShowPrivacyModal(false)}
-                className="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700"
               >
                 Cerrar
               </button>
@@ -155,7 +152,7 @@ const Footer: React.FC = () => {
           <div className="bg-white rounded-lg max-w-3xl max-h-[90vh] overflow-y-auto p-8" onClick={(e) => e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-gray-800">Términos de Uso</h2>
-              <button disabled onClick={() => setShowTermsModal(false)} className="text-gray-500 hover:text-gray-800 text-2xl font-bold disabled:opacity-50 disabled:cursor-not-allowed">&times;</button>
+              <button onClick={() => setShowTermsModal(false)} className="text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
             </div>
             
             <div className="text-gray-700 space-y-4 text-sm leading-relaxed">
@@ -241,9 +238,8 @@ const Footer: React.FC = () => {
 
             <div className="mt-6 text-center">
               <button 
-                disabled
                 onClick={() => setShowTermsModal(false)}
-                className="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700"
               >
                 Cerrar
               </button>

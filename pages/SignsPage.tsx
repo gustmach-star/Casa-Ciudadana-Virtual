@@ -100,9 +100,8 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
         {totalItems > 0 && (
           <div className="fixed bottom-4 right-4 z-50 md:bottom-6 md:right-6">
             <button
-              disabled
               onClick={() => setShowCartModal(s => !s)}
-              className="text-white px-4 py-2 rounded-full text-sm font-bold uppercase animate-bounce shadow-lg flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="text-white px-4 py-2 rounded-full text-sm font-bold uppercase animate-bounce shadow-lg flex items-center space-x-2"
               style={{ backgroundColor: COLORS.green }}
             >
               <ShoppingCart size={24} />
@@ -200,16 +199,15 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
 
                 <div className="mt-3 flex space-x-2">
                   <button
-                    disabled
                     onClick={saveCartToDrive}
-                    className="flex-1 bg-green-600 text-white font-bold py-2 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={uploading}
+                    className="flex-1 bg-green-600 text-white font-bold py-2 rounded-lg text-sm"
                   >
                     {uploading ? 'Guardando...' : 'Confirmar Pedido'}
                   </button>
                   <button
-                    disabled
                     onClick={() => { setCart({}); setUploadedUrl(null); setUploadError(null); }}
-                    className="flex-1 border border-gray-300 font-bold py-2 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 border border-gray-300 font-bold py-2 rounded-lg text-sm"
                   >
                     Vaciar
                   </button>
@@ -263,10 +261,9 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
                   <div className="flex flex-wrap gap-2">
                     {['50 unidades', '100 unidades', '200 unidades'].map((pkg) => (
                       <button
-                        disabled
                         key={pkg}
                         onClick={() => setFlyerPackage(pkg)}
-                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${
                           flyerPackage === pkg
                             ? 'text-white border-transparent'
                             : 'text-gray-600 border-gray-300 hover:border-gray-400'
@@ -294,10 +291,9 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
                   <div className="flex flex-wrap gap-2">
                     {['Pequeña', 'Mediana', 'Grande', 'Carro'].map((size) => (
                       <button
-                        disabled
                         key={size}
                         onClick={() => setFlagSize(size)}
-                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${flagSize === size
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${flagSize === size
                           ? 'text-white border-transparent'
                           : 'text-gray-600 border-gray-300 hover:border-gray-400'
                           }`}
@@ -319,10 +315,9 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
                   <div className="flex flex-wrap gap-2">
                     {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
                       <button
-                        disabled
                         key={size}
                         onClick={() => setShirtSize(size)}
-                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${shirtSize === size
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${shirtSize === size
                           ? 'text-white border-transparent'
                           : 'text-gray-600 border-gray-300 hover:border-gray-400'
                           }`}
@@ -344,10 +339,9 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
                   <div className="flex flex-wrap gap-2">
                     {['1x1', '1x2', '1.5x3'].map((size) => (
                       <button
-                        disabled
                         key={size}
                         onClick={() => setLonaSize(size)}
-                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${lonaSize === size
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${lonaSize === size
                           ? 'text-white border-transparent'
                           : 'text-gray-600 border-gray-300 hover:border-gray-400'
                           }`}
@@ -369,10 +363,9 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
                   <div className="flex flex-wrap gap-2">
                     {['Blanco', 'Amarillo', 'Rojo', 'Verde'].map((color) => (
                       <button
-                        disabled
                         key={color}
                         onClick={() => setCapColor(color)}
-                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${capColor === color
+                        className={`px-3 py-1 text-xs font-bold rounded-full border transition-colors ${capColor === color
                           ? 'text-white border-transparent'
                           : 'text-gray-600 border-gray-300 hover:border-gray-400'
                           }`}
@@ -389,9 +382,9 @@ const SignsPage: React.FC<SignsPageProps> = ({ cart, setCart, showCartModal, set
 
               <div className="mt-auto pt-4">
                 <button
-                  disabled
                   onClick={() => addToCart(item.id, item.id === 1 ? flagSize : item.id === 2 ? flyerPackage : item.id === 3 ? shirtSize : item.id === 5 ? lonaSize : item.id === 7 ? capColor : undefined)}
-                  className={`w-full border-2 font-bold py-2 rounded-lg transition-colors uppercase text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed ${item.stock === 'Agotado' ? 'opacity-50 cursor-not-allowed' : 'hover:text-white'}`}
+                  disabled={item.stock === 'Agotado'}
+                  className={`w-full border-2 font-bold py-2 rounded-lg transition-colors uppercase text-sm tracking-wide ${item.stock === 'Agotado' ? 'opacity-50 cursor-not-allowed' : 'hover:text-white'}`}
                   style={{ borderColor: item.stock === 'Agotado' ? '#9ca3af' : COLORS.green, color: item.stock === 'Agotado' ? '#9ca3af' : COLORS.green }}
                   onMouseOver={(e) => { if (item.stock !== 'Agotado') { e.currentTarget.style.backgroundColor = COLORS.green; e.currentTarget.style.color = 'white'; } }}
                   onMouseOut={(e) => { if (item.stock !== 'Agotado') { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = COLORS.green; } }}

@@ -56,7 +56,7 @@ const VolunteerPage: React.FC = () => {
         </div>
         <h2 className="text-2xl font-bold text-gray-800 mb-2">¡Gracias por sumarte!</h2>
         <p className="text-gray-600">Tus datos han sido registrados. Un coordinador territorial te contactará por WhatsApp pronto.</p>
-        <button disabled onClick={() => { setSubmitted(false); setFormData({ full_name: '', email: '', phone: '', location: '', roles: [] }); }} className="mt-8 font-bold uppercase text-sm disabled:opacity-50 disabled:cursor-not-allowed" style={{ color: COLORS.green }}>Volver al formulario</button>
+        <button onClick={() => { setSubmitted(false); setFormData({ full_name: '', email: '', phone: '', location: '', roles: [] }); }} className="mt-8 font-bold uppercase text-sm" style={{ color: COLORS.green }}>Volver al formulario</button>
       </div>
     );
   }
@@ -150,8 +150,8 @@ const VolunteerPage: React.FC = () => {
 
         <button 
           type="submit" 
-          disabled
-          className="w-full text-white font-bold py-3 rounded-lg shadow-md transition-transform transform hover:scale-[1.01] uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed" 
+          disabled={isSubmitting}
+          className="w-full text-white font-bold py-3 rounded-lg shadow-md transition-transform transform hover:scale-[1.01] uppercase tracking-wide disabled:opacity-50" 
           style={{ backgroundColor: COLORS.red }}
         >
           {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}

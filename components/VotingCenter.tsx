@@ -87,8 +87,8 @@ const VotingCenter: React.FC = () => {
           </div>
           <button
             type="submit"
-            disabled
-            className="w-full text-white font-bold py-3 rounded-lg transition-colors uppercase tracking-wide shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading}
+            className="w-full text-white font-bold py-3 rounded-lg transition-colors uppercase tracking-wide shadow-md"
             style={{ backgroundColor: COLORS.green }}
           >
             {loading ? 'Consultando Padrón...' : 'Consultar'}
@@ -118,11 +118,11 @@ const VotingCenter: React.FC = () => {
                 </div>
                 
                 <div className="mt-5 flex flex-col sm:flex-row gap-3">
-                  <button disabled className="flex-1 py-2 text-sm font-bold rounded border transition-colors text-center uppercase disabled:opacity-50 disabled:cursor-not-allowed" 
+                  <button className="flex-1 py-2 text-sm font-bold rounded border transition-colors text-center uppercase" 
                     style={{ borderColor: COLORS.green, color: COLORS.green }}>
                     Ver en Waze
                   </button>
-                  <button disabled className="flex-1 py-2 text-sm font-bold rounded text-white transition-colors text-center uppercase shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  <button className="flex-1 py-2 text-sm font-bold rounded text-white transition-colors text-center uppercase shadow-sm"
                      style={{ backgroundColor: COLORS.red }}>
                     Reportar Error
                   </button>
