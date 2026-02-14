@@ -114,7 +114,7 @@ const AIAssistantPage: React.FC = () => {
             />
             <button 
               type="submit" 
-              disabled={loading || !input.trim() || COALI_DISABLED}
+              disabled
               className="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-full transition-colors disabled:opacity-50"
             >
               <Send size={24} />

@@ -41,13 +41,14 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
         <div className="grid grid-cols-2 gap-2 max-w-md mx-auto xl:mx-0">
           {/* 1. Donar */}
           <button 
+            disabled
             onClick={() => {
               const donationSection = document.getElementById('donation-section');
               if (donationSection) {
                 donationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
             }}
-            className="text-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm bg-red-600/90 hover:bg-red-600 border-4"
+            className="text-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm bg-red-600/90 hover:bg-red-600 border-4 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ backgroundColor: COLORS.red, borderColor: COLORS.yellow }}
           >
             <Heart className="mr-2" size={22} />
@@ -55,16 +56,18 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
           </button>
           {/* 2. Coali IA */}
           <button 
+            disabled
             onClick={() => setActiveTab('ai')}
-            className="bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2 border-purple-300"
+            className="bg-gradient-to-br from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2 border-purple-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Sparkles className="mr-2" size={22} style={{ color: COLORS.yellow }} />
             Coali IA
           </button>
           {/* 3. Propaganda */}
           <button 
+            disabled
             onClick={() => setActiveTab('signos')}
-            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
             <Flag className="mr-2" size={22} />
@@ -72,8 +75,9 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
           </button>
           {/* 4. Sumáte */}
           <button 
+            disabled
             onClick={() => setActiveTab('voluntariado')}
-            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
             <Users className="mr-2" size={22} />
@@ -81,8 +85,9 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
           </button>
           {/* 5. ¿Dónde Voto? */}
           <button 
+            disabled
             onClick={() => setActiveTab('donde-votar')}
-            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
             <Search className="mr-2" size={22} />
@@ -90,8 +95,9 @@ export const Hero: React.FC<{ setActiveTab: (tab: string) => void }> = ({ setAct
           </button>
           {/* 6. Te llevamos */}
           <button 
+            disabled
             onClick={() => setActiveTab('transporte')}
-            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2"
+            className="bg-white/90 hover:bg-white px-5 py-3 rounded-lg font-bold shadow-lg transform hover:-translate-y-1 transition-all flex items-center justify-center text-sm backdrop-blur-sm border-2 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ color: COLORS.green, borderColor: COLORS.red }}
           >
             <Bus className="mr-2" size={22} />

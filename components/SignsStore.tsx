@@ -35,8 +35,9 @@ const SignsStore: React.FC = () => {
               <p className="text-xs font-extrabold uppercase tracking-widest mb-1 font-heading" style={{ color: COLORS.green }}>{item.type}</p>
               <h3 className="font-bold text-gray-800 text-lg mb-4">{item.name}</h3>
               <button 
+                disabled
                 onClick={() => addToCart(item.id)}
-                className="w-full border-2 font-bold py-2 rounded-lg transition-colors hover:text-white uppercase text-sm tracking-wide"
+                className="w-full border-2 font-bold py-2 rounded-lg transition-colors hover:text-white uppercase text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ borderColor: COLORS.green, color: COLORS.green }}
                 onMouseOver={(e) => { e.currentTarget.style.backgroundColor = COLORS.green; e.currentTarget.style.color = 'white'; }}
                 onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = COLORS.green; }}
